@@ -1,0 +1,200 @@
+#' Fan plot visualising intervals of a distribution
+#'
+#' For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
+#' intervals containing increasing proportions of the total density of \code{y}.
+#' Intervals are mapped to a continuous colour scale. Quantiles can also be
+#' precomputed and mapped to the aesthetic `quantile`.
+#' This function is designed with the need to summarise MCMC posterior
+#' distributions in mind, and is implements the functionality of the \code{fanplot}
+#' pacakge in \code{ggplot2}.
+#'
+#' @section Aesthetics:
+#'
+#'
+#'
+#' @export
+#' @inheritParams ggplot2::layer
+#' @param stat Use to overide the default use of \code{stat_interval}
+#' @param intervals specify the collection of intervals to be represented in the
+#' fan.
+#'
+#' @seealso
+#' \code{stat_summary} Summarises y at each value of x
+#' \code{stat_quantile} Uses quantile regression to predict quantiles
+#' \code{geom_interval} Plot intervals boundaries as lines
+#'
+#'
+#' @examples
+#'
+#' # Basic use. The data frame must have multiple y values for each
+#' # x
+#' ggplot(fake_df, aes(x=x,y=y)) +geom_fan()
+#'
+#'
+#' # use precomputed quantiles - reducing storage requirements.
+#' intervals = 1:19/20
+#' fake_q <- calc_quantiles(fake_df, intervals=intervals)
+#' # intervals in geom_fan must be the same as used to compute quantiles.
+#' ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+#'  geom_fan(intervals=intervals)
+#'
+#'
+#' # change the colour scale
+#' ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + scale_fill_gradient(low="red", high="pink")
+#'
+#'
+geom_fan <- function (mapping = NULL, data = NULL, stat = "interval", position = "identity",
+          na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, intervals=(2:98)/100, ...)
+{
+
+  layer(data = data, mapping = mapping, stat = stat,
+                 geom = GeomIntervalPoly, position = position,
+                 show.legend = show.legend, inherit.aes = inherit.aes,
+                 params = list(na.rm = na.rm, intervals=intervals, ...))
+}
+
+
+#' See \code{\link[ggplot2]{ggplot2-ggproto}}
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
+    required_aes = c("x", "y", "fill", "interval","hilo"),
+    default_aes=aes(alpha=1),
+    draw_group = function(data, panel_scales, coord) {
+      n <- nrow(data)
+      if (n <= 2) return(grid::nullGrob())
+
+      # data <- dplyr::group_by(data, interval, x)
+      data <- dplyr::group_by(data, x)
+
+      data <- dplyr::mutate(data, ordering = hilo * x)
+
+      data <- dplyr::arrange(data, hilo, ordering, -interval)
+
+      data <- dplyr::ungroup(data)
+      coords <- coord$transform(data, panel_scales)
+      grid::polygonGrob(
+        coords$x, coords$y,
+        id= - data$interval * 100,
+        #id=-1,
+        default.units = "native",
+        gp = grid::gpar(col = 0,
+                        fill = scales::alpha(data$fill, data$alpha),
+                        lwd = 0,
+                        lty = 0
+                )
+       )
+    }
+)
+
+#' Line plot visualising intervals of a distribution
+#'
+#' For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
+#' intervals containing increasing proportions of the total density of \code{y}.
+#' Boundaries of intervals are mapped to linetypes. Quantiles can also be
+#' precomputed and mapped to the aesthetic `quantile`.
+#' This function is designed with the need to summarise MCMC posterior
+#' distributions in mind, and is implements the functionality of the \code{fanplot}
+#' pacakge in \code{ggplot2}.
+#'
+#' @section Aesthetics:
+#'
+#'
+#'
+#' @export
+#' @inheritParams ggplot2::layer
+#' @param stat Use to overide the default use of \code{stat_interval}
+#' @param intervals specify the collection of intervals to be represented in the
+#' fan.
+#'
+#' @seealso
+#' \code{stat_summary} Summarises y at each value of x
+#' \code{stat_quantile} Uses quantile regression to predict quantiles
+#' \code{geom_fan} Plot intervals on a continuous colour scale
+#'
+#'
+#' @examples
+#'
+#' # Basic use. The data frame must have multiple y values for each
+#' # x
+#' ggplot(fake_df, aes(x=x,y=y)) +geom_interval()
+#'
+#'
+#' # use precomputed quantiles - reducing storage requirements.
+#' intervals = 1:19/20
+#' fake_q <- calc_quantiles(fake_df, intervals=intervals)
+#' # intervals in geom_fan must be the same as used to compute quantiles.
+#' ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+#'  geom_interval(intervals=intervals)
+#'
+#'
+geom_interval <- function(mapping = NULL, data = NULL,
+                      stat = "interval_fctr", position = "identity",
+                      intervals=c(0,50,90)/100,
+                      lineend = "butt",
+                      linejoin = "round",
+                      linemitre = 1,
+                      arrow = NULL,
+                      na.rm = FALSE,
+                      show.legend = NA,
+                      inherit.aes = TRUE,
+                      ...) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomIntervalPath,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      intervals=intervals,
+      lineend = lineend,
+      linejoin = linejoin,
+      linemitre = linemitre,
+      arrow = arrow,
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+#' See \code{\link[ggplot2]{ggplot2-ggproto}}
+#' @format NULL
+#' @usage NULL
+#' @export
+GeomIntervalPath <- ggproto("GeomIntervalPath", Geom,
+  required_aes = c("x", "y", "interval","hilo","linetype"),
+
+  default_aes = aes(colour = "black", size = 0.5, alpha = NA),
+  draw_group = function(data, panel_scales, coord, arrow = NULL,
+                        lineend = "butt", linejoin = "round", linemitre = 1,
+                        na.rm = FALSE) {
+
+
+    data$line_id <- interaction(data$interval,data$hilo)
+
+    data <- data[order(data$line_id), , drop = FALSE]
+    coords <- coord$transform(data, panel_scales)
+
+    # Silently drop lines with less than two points, preserving order
+    #rows <- stats::ave(seq_len(nrow(munched)), data$line_id, FUN = length)
+    #munched <- munched[rows >= 2, ]
+    #if (nrow(munched) < 2) return(zeroGrob())
+
+    grid::polylineGrob(
+      coords$x, coords$y, id = data$line_id,
+      default.units = "native", arrow = arrow,
+      gp = grid::gpar(col = alpha(data$colour, data$alpha),
+                lwd = data$size * .pt,
+                lty = unique(data$linetype),
+                lineend = lineend,
+                linejoin = linejoin,
+                linemitre = linemitre
+        )
+     )
+  },
+  draw_key = draw_key_path
+)
+
