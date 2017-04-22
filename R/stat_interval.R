@@ -28,14 +28,14 @@ StatInterval <- ggproto("StatInterval", Stat,
   compute_group = function(data, scales, params, intervals) {
 #    probs <- c(rev(0.5 - intervals / 2), 0.5 + intervals / 2)
 #    data_q <- dplyr::do(dplyr::group_by(data, x),
-#                        data.frame(quantile=probs,
+#                        data.frame(quantiles=probs,
 #                                   y=quantile(.$y, probs=probs)))
     # calculate quantiles if not already present.
     if (!("quantile" %in% names(data))){
       data <- calc_quantiles(data, intervals)
     }
     data_interval <- dplyr::mutate(data,
-                                   Interval = abs(quantile - 0.5) * 2)
+                                   Interval = abs(quantiles - 0.5) * 2)
     data_interval <- dplyr::mutate(data_interval, Interval=round(Interval, 3))
     data_interval <- dplyr::group_by(data_interval, x, Interval)
     data_interval <- dplyr::mutate(data_interval, hilo=ifelse(y==max(y), 1, -1))

@@ -4,12 +4,7 @@
 \name{ggfan}
 \alias{ggfan}
 \alias{ggfan-package}
-\title{Implements the functionality of the fanplot package as ggplot
-geoms. Designed for summarising MCMC samples from a posterior distribution,
-where a visualisation is desired for several values of a continuous
-covariate.
-Increasing posterior intervals derived from the quantiles of the sampled
-quantity are mapped to a continuous colour scale.}
+\title{Fanplots for ggplot2}
 \description{
 Implements the functionality of the fanplot package as ggplot
 geoms. Designed for summarising MCMC samples from a posterior distribution,

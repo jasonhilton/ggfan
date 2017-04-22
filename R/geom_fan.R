@@ -1,26 +1,43 @@
 #' Fan plot visualising intervals of a distribution
 #'
-#' For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
+#' Fan Plots allow the distribution of a variable to be visualised by 
+#' representing sets of central probability intervals through colour.
+#' For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
-#' Intervals are mapped to a continuous colour scale. Quantiles can also be
-#' precomputed and mapped to the aesthetic `quantile`.
+#' Intervals are mapped to a continuous colour scale, so that changes in colour 
+#' represent intervals covering an increasing proportion of total density.
+#' Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
 #' This function is designed with the need to summarise MCMC posterior
-#' distributions in mind, and is implements the functionality of the \code{fanplot}
-#' pacakge in \code{ggplot2}.
+#' distributions in mind, and implements the functionality of the \code{fanplot}
+#' pacakge in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to 
+#' allow estimation of the specified quantiles warrant a fanplot.
 #'
-#' @section Aesthetics:
-#'
-#'
-#'
-#' @export
 #' @inheritParams ggplot2::layer
 #' @param stat Use to overide the default use of \code{stat_interval}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
+#' 
+#' 
+#' @section Aesthetics:
+#'
+#' \code{geom_fan} understands the following aesthetics (required aesthetics are in bold):
+#' 
+#' \itemize{
+#' \item \code{\strong{x}}
+#' \item \code{\strong{y}}
+#' \item \code{alpha}
+#' \item \code{group}
+#' \item \code{quantile}
+#' }
+#'
+#' @export
+#' 
 #'
 #' @seealso
 #' \code{stat_summary} Summarises y at each value of x
+#' 
 #' \code{stat_quantile} Uses quantile regression to predict quantiles
+#' 
 #' \code{geom_interval} Plot intervals boundaries as lines
 #'
 #'
@@ -95,12 +112,20 @@ GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
 #' Boundaries of intervals are mapped to linetypes. Quantiles can also be
 #' precomputed and mapped to the aesthetic `quantile`.
 #' This function is designed with the need to summarise MCMC posterior
-#' distributions in mind, and is implements the functionality of the \code{fanplot}
-#' pacakge in \code{ggplot2}.
+#' distributions in mind.
 #'
 #' @section Aesthetics:
 #'
-#'
+#' \code{geom_interval} understands the following aesthetics (required aesthetics are in bold):
+#' 
+#' \itemize{
+#' \item \code{\strong{x}}
+#' \item \code{\strong{y}}
+#' \item \code{quantile}
+#' \item \code{group}
+#' \item \code{colour}
+#' \item \code{size}
+#' }
 #'
 #' @export
 #' @inheritParams ggplot2::layer

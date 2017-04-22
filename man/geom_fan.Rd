@@ -56,6 +56,15 @@ pacakge in \code{ggplot2}.
 }
 \section{Aesthetics}{
 
+
+\code{geom_fan} understands the following aesthetics (required aesthetics are in bold):
+
+\itemize{
+\item \code{\strong{x}}
+\item \code{\strong{y}}
+\item \code{alpha}
+\item \code{group}
+}
 }
 
 \examples{
@@ -80,6 +89,8 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + scale_fill_gradient(low="red", high
 }
 \seealso{
 \code{stat_summary} Summarises y at each value of x
+
 \code{stat_quantile} Uses quantile regression to predict quantiles
+
 \code{geom_interval} Plot intervals boundaries as lines
 }
