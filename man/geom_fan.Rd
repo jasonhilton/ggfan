@@ -46,13 +46,17 @@ the default plot specification, e.g. \code{\link{borders}}.}
 fan.}
 }
 \description{
-For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
+Fan Plots allow the distribution of a variable to be visualised by 
+representing sets of central probability intervals through colour.
+For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
 intervals containing increasing proportions of the total density of \code{y}.
-Intervals are mapped to a continuous colour scale. Quantiles can also be
-precomputed and mapped to the aesthetic `quantile`.
+Intervals are mapped to a continuous colour scale, so that changes in colour 
+represent intervals covering an increasing proportion of total density.
+Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
 This function is designed with the need to summarise MCMC posterior
-distributions in mind, and is implements the functionality of the \code{fanplot}
-pacakge in \code{ggplot2}.
+distributions in mind, and implements the functionality of the \code{fanplot}
+pacakge in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to 
+allow estimation of the specified quantiles warrant a fanplot.
 }
 \section{Aesthetics}{
 
@@ -64,6 +68,7 @@ pacakge in \code{ggplot2}.
 \item \code{\strong{y}}
 \item \code{alpha}
 \item \code{group}
+\item \code{quantile}
 }
 }
 

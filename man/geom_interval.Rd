@@ -52,11 +52,21 @@ intervals containing increasing proportions of the total density of \code{y}.
 Boundaries of intervals are mapped to linetypes. Quantiles can also be
 precomputed and mapped to the aesthetic `quantile`.
 This function is designed with the need to summarise MCMC posterior
-distributions in mind, and is implements the functionality of the \code{fanplot}
-pacakge in \code{ggplot2}.
+distributions in mind.
 }
 \section{Aesthetics}{
 
+
+\code{geom_interval} understands the following aesthetics (required aesthetics are in bold):
+
+\itemize{
+\item \code{\strong{x}}
+\item \code{\strong{y}}
+\item \code{quantile}
+\item \code{group}
+\item \code{colour}
+\item \code{size}
+}
 }
 
 \examples{
