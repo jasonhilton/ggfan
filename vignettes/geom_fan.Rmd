@@ -102,7 +102,7 @@ One problem with plots of this nature is that they give a false impression of or
 set.seed(53)
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + stat_sample(aes(group=Sim))
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + 
-  stat_sample(aes(group=Sim), n_samples=7, size=0.8, alpha=1)
+  stat_sample(aes(group=Sim), n_samples=7, size=0.2, alpha=1)
 
 ```
 This plot looks uglier than it might; in real data, we might expect correlation in $y$ at adjacent values of $x$, giving smoother lines.
