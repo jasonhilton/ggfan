@@ -1,7 +1,7 @@
 #' Fan plot visualising intervals of a distribution
 #'
 #' Fan Plots allow the distribution of a variable to be visualised by
-#' #' representing sets of central probability intervals through colour.
+#' representing sets of central probability intervals through colour.
 #' For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
 #' Intervals are mapped to a continuous colour scale, so that changes in colour

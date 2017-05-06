@@ -7,7 +7,7 @@
 \usage{
 stat_sample(mapping = NULL, data = NULL, stat = "sample",
   position = "identity", na.rm = FALSE, show.legend = F,
-  inherit.aes = TRUE, n_samples = 5, size = 0.2, alpha = 0.5, ...)
+  inherit.aes = TRUE, n_samples = 5, size = 0.2, alpha = 1, ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link{aes}} or

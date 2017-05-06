@@ -17,6 +17,7 @@ Imports:
   ggplot2,
   colorspace,
   dplyr,
+  stats,
   grid
 Suggests: testthat,
     knitr,
