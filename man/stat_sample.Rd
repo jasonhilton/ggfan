@@ -49,6 +49,10 @@ the default plot specification, e.g. \code{\link{borders}}.}
 
 \item{n_samples}{number of samples to plot}
 
+\item{size}{The width of the line in mm}
+
+\item{alpha}{The transparency of lines to be drawn. Must lie between 0 and 1.}
+
 \item{...}{other arguments passed on to \code{\link{layer}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters

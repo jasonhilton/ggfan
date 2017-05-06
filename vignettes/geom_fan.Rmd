@@ -117,7 +117,7 @@ fake_q <-  fake_df %>% calc_quantiles(intervals=(1:99)/100)
 names(fake_q)
 dim(fake_df); dim(fake_q)
 
-ggplot(fake_q,  aes(x=x,y=y,quantiles=quantiles)) + geom_fan()
+ggplot(fake_q,  aes(x=x,y=y,quantile=quantile)) + geom_fan()
 
 
 ```
@@ -152,6 +152,7 @@ ggplot(fake_df, aes(x=x, y=y)) + geom_fan(intervals=c(50,80,95)/100) +
   theme_bw() + geom_line(data=q_df, mapping=aes(x=time,y=value, group=quantile, linetype=quantile))
 
 ```
+
 
 ## Grouping and Facetting
 
@@ -189,7 +190,7 @@ print(p)
 There are existing geoms that do similar jobs, but nothing quite the same. The `stat_quantile` stat fits model-based quantiles to the data, while the various density stats and geoms also work to summarise probability distributions. The `stat_summary` provides functions to summarise `y` values for each value of x, as is done here, but does not provide for fan-like geoms.
 
 ## Limitations
-One potential problem with the approach here is the interpolation between neighbouring x-values, caused by the use of. There is a underlying assumption that the `x` value is continuous and is can be smoothly interpolated between `x` and `x+1`.
+One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and is can be smoothly interpolated between `x` and `x+1`. 
 
 
 

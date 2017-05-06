@@ -1,43 +1,47 @@
 #' Fan plot visualising intervals of a distribution
 #'
-#' Fan Plots allow the distribution of a variable to be visualised by 
-#' representing sets of central probability intervals through colour.
+#' Fan Plots allow the distribution of a variable to be visualised by
+#' #' representing sets of central probability intervals through colour.
 #' For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
-#' Intervals are mapped to a continuous colour scale, so that changes in colour 
+#' Intervals are mapped to a continuous colour scale, so that changes in colour
 #' represent intervals covering an increasing proportion of total density.
 #' Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
 #' This function is designed with the need to summarise MCMC posterior
 #' distributions in mind, and implements the functionality of the \code{fanplot}
-#' pacakge in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to 
+#' package in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to
 #' allow estimation of the specified quantiles warrant a fanplot.
 #'
 #' @inheritParams ggplot2::layer
 #' @param stat Use to overide the default use of \code{stat_interval}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
-#' 
-#' 
+#' @param ... other arguments passed on to \code{\link{layer}}. These are
+#'   often aesthetics, used to set an aesthetic to a fixed value, like
+#'   \code{color = "red"} or \code{size = 3}. They may also be parameters
+#'   to the paired geom/stat.
+#'
+#'
 #' @section Aesthetics:
 #'
 #' \code{geom_fan} understands the following aesthetics (required aesthetics are in bold):
-#' 
+#'
 #' \itemize{
-#' \item \code{\strong{x}}
-#' \item \code{\strong{y}}
+#' \item \strong{x}
+#' \item \strong{y}
 #' \item \code{alpha}
 #' \item \code{group}
 #' \item \code{quantile}
 #' }
 #'
 #' @export
-#' 
+#'
 #'
 #' @seealso
 #' \code{stat_summary} Summarises y at each value of x
-#' 
+#'
 #' \code{stat_quantile} Uses quantile regression to predict quantiles
-#' 
+#'
 #' \code{geom_interval} Plot intervals boundaries as lines
 #'
 #'
@@ -45,6 +49,8 @@
 #'
 #' # Basic use. The data frame must have multiple y values for each
 #' # x
+#' library(ggplot2)
+#'
 #' ggplot(fake_df, aes(x=x,y=y)) +geom_fan()
 #'
 #'
@@ -52,7 +58,7 @@
 #' intervals = 1:19/20
 #' fake_q <- calc_quantiles(fake_df, intervals=intervals)
 #' # intervals in geom_fan must be the same as used to compute quantiles.
-#' ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+#' ggplot(fake_q, aes(x=x,y=y, quantile=quantile)) +
 #'  geom_fan(intervals=intervals)
 #'
 #'
@@ -61,13 +67,13 @@
 #'
 #'
 geom_fan <- function (mapping = NULL, data = NULL, stat = "interval", position = "identity",
-          na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, intervals=(2:98)/100, ...)
+         show.legend = NA, inherit.aes = TRUE, intervals=(2:98)/100, ...)
 {
 
-  layer(data = data, mapping = mapping, stat = stat,
+  ggplot2::layer(data = data, mapping = mapping, stat = stat,
                  geom = GeomIntervalPoly, position = position,
                  show.legend = show.legend, inherit.aes = inherit.aes,
-                 params = list(na.rm = na.rm, intervals=intervals, ...))
+                 params = list(intervals=intervals, ...))
 }
 
 
@@ -75,9 +81,9 @@ geom_fan <- function (mapping = NULL, data = NULL, stat = "interval", position =
 #' @format NULL
 #' @usage NULL
 #' @export
-GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
+GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
     required_aes = c("x", "y", "fill", "interval","hilo"),
-    default_aes=aes(alpha=1),
+    default_aes=ggplot2::aes(alpha=1),
     draw_group = function(data, panel_scales, coord) {
       n <- nrow(data)
       if (n <= 2) return(grid::nullGrob())
@@ -117,10 +123,10 @@ GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
 #' @section Aesthetics:
 #'
 #' \code{geom_interval} understands the following aesthetics (required aesthetics are in bold):
-#' 
+#'
 #' \itemize{
-#' \item \code{\strong{x}}
-#' \item \code{\strong{y}}
+#' \item \strong{x}
+#' \item \strong{y}
 #' \item \code{quantile}
 #' \item \code{group}
 #' \item \code{colour}
@@ -129,6 +135,7 @@ GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
 #'
 #' @export
 #' @inheritParams ggplot2::layer
+#' @inheritParams ggplot2::geom_line
 #' @param stat Use to overide the default use of \code{stat_interval}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
@@ -141,6 +148,7 @@ GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
 #'
 #' @examples
 #'
+#' library(ggplot2)
 #' # Basic use. The data frame must have multiple y values for each
 #' # x
 #' ggplot(fake_df, aes(x=x,y=y)) +geom_interval()
@@ -150,7 +158,7 @@ GeomIntervalPoly <- ggproto("GeomIntervalPoly", Geom,
 #' intervals = 1:19/20
 #' fake_q <- calc_quantiles(fake_df, intervals=intervals)
 #' # intervals in geom_fan must be the same as used to compute quantiles.
-#' ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+#' ggplot(fake_q, aes(x=x,y=y, quantile=quantile)) +
 #'  geom_interval(intervals=intervals)
 #'
 #'
@@ -165,7 +173,7 @@ geom_interval <- function(mapping = NULL, data = NULL,
                       show.legend = NA,
                       inherit.aes = TRUE,
                       ...) {
-  layer(
+  ggplot2::layer(
     data = data,
     mapping = mapping,
     stat = stat,
@@ -189,10 +197,10 @@ geom_interval <- function(mapping = NULL, data = NULL,
 #' @format NULL
 #' @usage NULL
 #' @export
-GeomIntervalPath <- ggproto("GeomIntervalPath", Geom,
+GeomIntervalPath <- ggplot2::ggproto("GeomIntervalPath", ggplot2::Geom,
   required_aes = c("x", "y", "interval","hilo","linetype"),
 
-  default_aes = aes(colour = "black", size = 0.5, alpha = NA),
+  default_aes = ggplot2::aes(colour = "black", size = 0.5, alpha = NA),
   draw_group = function(data, panel_scales, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 1,
                         na.rm = FALSE) {
@@ -220,6 +228,6 @@ GeomIntervalPath <- ggproto("GeomIntervalPath", Geom,
         )
      )
   },
-  draw_key = draw_key_path
+  draw_key = ggplot2::draw_key_path
 )
 

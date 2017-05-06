@@ -5,8 +5,8 @@
 \title{Fan plot visualising intervals of a distribution}
 \usage{
 geom_fan(mapping = NULL, data = NULL, stat = "interval",
-  position = "identity", na.rm = FALSE, show.legend = NA,
-  inherit.aes = TRUE, intervals = (2:98)/100, ...)
+  position = "identity", show.legend = NA, inherit.aes = TRUE,
+  intervals = (2:98)/100, ...)
 }
 \arguments{
 \item{mapping}{Set of aesthetic mappings created by \code{\link{aes}} or
@@ -44,18 +44,23 @@ the default plot specification, e.g. \code{\link{borders}}.}
 
 \item{intervals}{specify the collection of intervals to be represented in the
 fan.}
+
+\item{...}{other arguments passed on to \code{\link{layer}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{color = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \description{
-Fan Plots allow the distribution of a variable to be visualised by 
+Fan Plots allow the distribution of a variable to be visualised by
 representing sets of central probability intervals through colour.
 For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
 intervals containing increasing proportions of the total density of \code{y}.
-Intervals are mapped to a continuous colour scale, so that changes in colour 
+Intervals are mapped to a continuous colour scale, so that changes in colour
 represent intervals covering an increasing proportion of total density.
 Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
 This function is designed with the need to summarise MCMC posterior
 distributions in mind, and implements the functionality of the \code{fanplot}
-pacakge in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to 
+package in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to
 allow estimation of the specified quantiles warrant a fanplot.
 }
 \section{Aesthetics}{
@@ -64,8 +69,8 @@ allow estimation of the specified quantiles warrant a fanplot.
 \code{geom_fan} understands the following aesthetics (required aesthetics are in bold):
 
 \itemize{
-\item \code{\strong{x}}
-\item \code{\strong{y}}
+\item \strong{x}
+\item \strong{y}
 \item \code{alpha}
 \item \code{group}
 \item \code{quantile}
@@ -76,6 +81,8 @@ allow estimation of the specified quantiles warrant a fanplot.
 
 # Basic use. The data frame must have multiple y values for each
 # x
+library(ggplot2)
+
 ggplot(fake_df, aes(x=x,y=y)) +geom_fan()
 
 
@@ -83,7 +90,7 @@ ggplot(fake_df, aes(x=x,y=y)) +geom_fan()
 intervals = 1:19/20
 fake_q <- calc_quantiles(fake_df, intervals=intervals)
 # intervals in geom_fan must be the same as used to compute quantiles.
-ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+ggplot(fake_q, aes(x=x,y=y, quantile=quantile)) +
  geom_fan(intervals=intervals)
 
 

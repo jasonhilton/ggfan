@@ -14,7 +14,7 @@ values for every x}
 desired.}
 }
 \value{
-A data frame containing x, y, and quantiles columns.
+A data frame containing x, y, and quantile columns.
 }
 \description{
 Calculate quantiles of a tidy dataframe

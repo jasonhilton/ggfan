@@ -12,8 +12,7 @@ Authors@R: person("Jason", "Hilton", email = "jason_hilton@yahoo.com",
 License: GPL-2 | file LICENSE
 LazyData: TRUE
 Depends:
- R (>= 3.1),
- ggplot2
+ R (>= 3.1)
 Imports:
   ggplot2,
   colorspace,

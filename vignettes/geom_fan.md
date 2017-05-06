@@ -138,7 +138,7 @@ fake_q <-  fake_df %>% calc_quantiles(intervals=(1:99)/100)
 names(fake_q)
 ```
 
-    ## [1] "x"         "quantiles" "y"
+    ## [1] "x"        "quantile" "y"
 
 ``` r
 dim(fake_df); dim(fake_q)
@@ -149,7 +149,7 @@ dim(fake_df); dim(fake_q)
     ## [1] 9900    3
 
 ``` r
-ggplot(fake_q,  aes(x=x,y=y,quantiles=quantiles)) + geom_fan()
+ggplot(fake_q,  aes(x=x,y=y,quantile=quantile)) + geom_fan()
 ```
 
 ![](geom_fan_files/figure-markdown_github/quantiles_direct-1.png)
@@ -229,4 +229,4 @@ There are existing geoms that do similar jobs, but nothing quite the same. The `
 Limitations
 -----------
 
-One potential problem with the approach here is the interpolation between neighbouring x-values, caused by the use of. There is a underlying assumption that the `x` value is continuous and is can be smoothly interpolated between `x` and `x+1`.
+One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and is can be smoothly interpolated between `x` and `x+1`.

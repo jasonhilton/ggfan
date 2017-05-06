@@ -37,6 +37,17 @@ a call to a position adjustment function.}
 \item{intervals}{specify the collection of intervals to be represented in the
 fan.}
 
+\item{lineend}{Line end style (round, butt, square)}
+
+\item{linejoin}{Line join style (round, mitre, bevel)}
+
+\item{linemitre}{Line mitre limit (number greater than 1)}
+
+\item{arrow}{Arrow specification, as created by \code{\link[grid]{arrow}}}
+
+\item{na.rm}{If \code{FALSE}, the default, missing values are removed with
+a warning. If \code{TRUE}, missing values are silently removed.}
+
 \item{show.legend}{logical. Should this layer be included in the legends?
 \code{NA}, the default, includes if any aesthetics are mapped.
 \code{FALSE} never includes, and \code{TRUE} always includes.}
@@ -45,6 +56,11 @@ fan.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link{borders}}.}
+
+\item{...}{other arguments passed on to \code{\link{layer}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{color = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \description{
 For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
@@ -60,8 +76,8 @@ distributions in mind.
 \code{geom_interval} understands the following aesthetics (required aesthetics are in bold):
 
 \itemize{
-\item \code{\strong{x}}
-\item \code{\strong{y}}
+\item \strong{x}
+\item \strong{y}
 \item \code{quantile}
 \item \code{group}
 \item \code{colour}
@@ -71,6 +87,7 @@ distributions in mind.
 
 \examples{
 
+library(ggplot2)
 # Basic use. The data frame must have multiple y values for each
 # x
 ggplot(fake_df, aes(x=x,y=y)) +geom_interval()
@@ -80,7 +97,7 @@ ggplot(fake_df, aes(x=x,y=y)) +geom_interval()
 intervals = 1:19/20
 fake_q <- calc_quantiles(fake_df, intervals=intervals)
 # intervals in geom_fan must be the same as used to compute quantiles.
-ggplot(fake_q, aes(x=x,y=y, quantiles=quantiles)) +
+ggplot(fake_q, aes(x=x,y=y, quantile=quantile)) +
  geom_interval(intervals=intervals)
 
 
