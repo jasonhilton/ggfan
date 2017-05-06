@@ -14,7 +14,7 @@ test_that("calc_quantile allows retention of original df names",
   {
   intervals <- c(0.5,0.8)
   df <- data.frame(a=rep(1:10,5), b=rnorm(50))
-  df_q <- calc_quantiles(df, intervals, rename=F)
+  df_q <- calc_quantiles(df, intervals, x_var="a", y_var="b", rename=F)
   expect_true(all(c("a","b") %in% names(df_q)))
   }
 )

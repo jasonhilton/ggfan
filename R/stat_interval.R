@@ -55,10 +55,13 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
 #'
 #' @param data  A data frame with containing x and y columns, with several y
 #' values for every x
-#' @param intervals a list of intervals for which corresponding quantiles are
+#' @param intervals A list of intervals for which corresponding quantiles are
 #' desired.
-#'
-#' @return A data frame containing x, y, and quantile columns.
+#' @param x_var A character string giving the name of the x variable
+#' @param y_var A character string giving the name of the y variable
+#' @param rename Logical. Indicates whether to retain existing variable name
+#' or use \code{x} and \code{y}.
+#' @return A data frame containing x, y, and quantile columns (possibly renamed)
 #'
 #'
 #' @examples
@@ -69,15 +72,38 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
 #' head(fake_q)
 #'
 #' @export
-calc_quantiles <- function(data, intervals){
+calc_quantiles <- function(data, intervals, x_var="x",y_var="y",rename=T){
   # TODO fix this and make more flexible
-  if (!("x" %in% names(data) && "y" %in% names(data))){
-    stop("data frame must have x and y columns")
+  # if (!("x" %in% names(data) && "y" %in% names(data))){
+  #   stop("data frame must have x and y columns")
+  # }
+  #
+
+  if (!(is.data.frame(data))){
+    stop("data must be a data frame")
   }
+  if (!(x_var %in% names(data) && y_var %in% names(data))){
+     stop("specified x and y variables are not in dataframe")
+  }
+
   probs <- c(rev(0.5 - intervals / 2), 0.5 + intervals / 2)
-  data_q <- dplyr::do(dplyr::group_by(data, x),
+  # TODO recode with simpler way of doing this using rename_ or similar do_
+  data$x <- data[[x_var]]
+  data$y <- data[[y_var]]
+  grouped_df <- dplyr::group_by(data, x)
+  n_df <- dplyr::summarise(grouped_df, n=n())
+  if (min(n_df$n) < length(probs)){
+    stop("to few observations per x value to compute specifed intervals")
+  }
+  data_q <- dplyr::do(grouped_df,
                       data.frame(quantile=probs,
                                  y=stats::quantile(.$y, probs=probs)))
+  if(!rename){
+    data_q[[x_var]] <- data_q$x
+    data_q[[y_var]] <- data_q$y
+    data_q$x <- NULL
+    data_q$y <- NULL
+  }
   return(data_q)
 }
 

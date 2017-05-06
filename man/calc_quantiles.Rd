@@ -4,17 +4,24 @@
 \alias{calc_quantiles}
 \title{Calculate quantiles of a tidy dataframe}
 \usage{
-calc_quantiles(data, intervals)
+calc_quantiles(data, intervals, x_var = "x", y_var = "y", rename = T)
 }
 \arguments{
 \item{data}{A data frame with containing x and y columns, with several y
 values for every x}
 
-\item{intervals}{a list of intervals for which corresponding quantiles are
+\item{intervals}{A list of intervals for which corresponding quantiles are
 desired.}
+
+\item{x_var}{A character string giving the name of the x variable}
+
+\item{y_var}{A character string giving the name of the y variable}
+
+\item{rename}{Logical. Indicates whether to retain existing variable name
+or use \code{x} and \code{y}.}
 }
 \value{
-A data frame containing x, y, and quantile columns.
+A data frame containing x, y, and quantile columns (possibly renamed)
 }
 \description{
 Calculate quantiles of a tidy dataframe
