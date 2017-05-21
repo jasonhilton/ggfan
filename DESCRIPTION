@@ -6,7 +6,7 @@ Description: Implements the functionality of the fanplot package as ggplot
   where a visualisation is desired for several values of a continuous covariate.
   Increasing posterior intervals of the sampled quantity are mapped to a continous colour 
   scale.
-Version: 0.0.0.9000   
+Version: 0.0.1.0000   
 Authors@R: person("Jason", "Hilton", email = "jason_hilton@yahoo.com",
   role = c("aut", "cre"))
 License: GPL-2 | file LICENSE
