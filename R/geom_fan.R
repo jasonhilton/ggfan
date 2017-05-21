@@ -107,7 +107,8 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
                         lty = 0
                 )
        )
-    }
+    },
+    draw_key=ggplot2::draw_key_rect
 )
 
 #' Line plot visualising intervals of a distribution
