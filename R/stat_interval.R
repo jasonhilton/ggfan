@@ -8,36 +8,31 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
   # what if the data doesn't have enough points at each x?
   # do it test driven!
   setup_params = function(data, params) {
-    # testing like below
-    #if (!is.null(data$y) || !is.null(params$y)) {
-    #  stop("stat_bin() must not be used with a y aesthetic.", call. = FALSE)
-    #}
-    #if (is.integer(data$x)) {
-    #  stop('StatBin requires a continuous x variable the x variable is discrete.
-    # Perhaps you want stat="count"?',
-    #       call. = FALSE)
-    #}
-
-    #if (!is.null(params$drop)) {
-    #  warning("`drop` is deprecated. Please use `pad` instead.", call. = FALSE)
-    #  params$drop <- NULL
-    #}
     params
   },
 
   compute_group = function(data, scales, params, intervals) {
-#    probs <- c(rev(0.5 - intervals / 2), 0.5 + intervals / 2)
-#    data_q <- dplyr::do(dplyr::group_by(data, x),
-#                        data.frame(quantiles=probs,
-#                                   y=quantile(.$y, probs=probs)))
+    if(length(data$x)<2){
+      stop("Too few rows in plotting data. This may be because invalid data has
+           been provided")
+    }
+
     # calculate quantiles if not already present.
     if (!("quantile" %in% names(data))){
       data <- calc_quantiles(data, intervals)
     }
+
     data_interval <- dplyr::mutate(data,
                                    Interval = abs(quantile - 0.5) * 2)
     data_interval <- dplyr::mutate(data_interval, Interval=round(Interval, 3))
     data_interval <- dplyr::group_by(data_interval, x, Interval)
+    df_n <- dplyr::filter(data_interval, quantile!=0.5)
+    df_n <- dplyr::summarise(dplyr::group_by(data,quantile, x), n=n())
+    if(min(df_n$n)!=2){
+      stop(paste("Quantiles supplied must be in symmetric pairs about the median.",
+                 "For example c(0.2,0.5,0.8) is admissable, c(0.1,0.5,0.51) is not"
+      ))
+    }
     data_interval <- dplyr::mutate(data_interval, hilo=ifelse(y==max(y), 1, -1))
     data_interval <- dplyr::ungroup(data_interval)
     return(data_interval)
@@ -73,12 +68,6 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
 #'
 #' @export
 calc_quantiles <- function(data, intervals, x_var="x",y_var="y",rename=T){
-  # TODO fix this and make more flexible
-  # if (!("x" %in% names(data) && "y" %in% names(data))){
-  #   stop("data frame must have x and y columns")
-  # }
-  #
-
   if (!(is.data.frame(data))){
     stop("data must be a data frame")
   }
@@ -93,7 +82,7 @@ calc_quantiles <- function(data, intervals, x_var="x",y_var="y",rename=T){
   grouped_df <- dplyr::group_by(data, x)
   n_df <- dplyr::summarise(grouped_df, n=n())
   if (min(n_df$n) < length(probs)){
-    stop("to few observations per x value to compute specifed intervals")
+    stop("too few observations per x value to compute specifed intervals")
   }
   data_q <- dplyr::do(grouped_df,
                       data.frame(quantile=probs,
@@ -113,7 +102,8 @@ calc_quantiles <- function(data, intervals, x_var="x",y_var="y",rename=T){
 #' @usage NULL
 #' @export
 StatIntervalFctr <- ggplot2::ggproto("StatIntervalFctr", StatInterval,
-  compute_group= function(data, scales, params, intervals){
+
+ compute_group= function(data, scales, params, intervals){
     data <- StatInterval$compute_group(data,scales,params,intervals)
     data <- dplyr::mutate(data,
                           Interval_cont=Interval,
@@ -159,8 +149,8 @@ StatSample <- ggplot2::ggproto("StatIntervalFctr", ggplot2::Stat,
     chosen_groups <- sample(data$group,n_samples)
     data <- data[data$group %in% chosen_groups,]
     return(data)
-  }
-  #default_aes=aes(alpha=0.5, size=0.2)
+  },
+  default_aes=ggplot2::aes(size=0.2)
 )
 
 
