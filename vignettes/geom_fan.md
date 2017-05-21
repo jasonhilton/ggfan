@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-05-06
+2017-05-21
 
 Introduction
 ============
@@ -15,9 +15,46 @@ For convenience, a few other libraries are used during the vignette
 ``` r
 library(ggplot2)
 library(magrittr)
-library(tidyr)
-library(dplyr)
+```
 
+    ## 
+    ## Attaching package: 'magrittr'
+
+    ## The following objects are masked from 'package:testthat':
+    ## 
+    ##     equals, is_less_than, not
+
+``` r
+library(tidyr)
+```
+
+    ## 
+    ## Attaching package: 'tidyr'
+
+    ## The following object is masked from 'package:magrittr':
+    ## 
+    ##     extract
+
+``` r
+library(dplyr)
+```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following object is masked from 'package:testthat':
+    ## 
+    ##     matches
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
 library(ggfan)
 ```
 
@@ -45,13 +82,13 @@ fake_df <- data.frame(x=time, t(fake_data)) %>% gather(key=Sim, value=y, -x)
 head(fake_df)
 ```
 
-    ##   x Sim            y
-    ## 1 1  X1  0.660321854
-    ## 2 2  X1  1.619992700
-    ## 3 3  X1 -0.001961772
-    ## 4 4  X1  0.374415291
-    ## 5 5  X1  5.975271678
-    ## 6 6  X1  2.340088063
+    ##   x Sim          y
+    ## 1 1  X1  1.7766702
+    ## 2 2  X1 -0.5684017
+    ## 3 3  X1  0.1480171
+    ## 4 4  X1  2.0139673
+    ## 5 5  X1  2.3111821
+    ## 6 6  X1  2.1574121
 
 Now that we have a data set, let's visualise it using ggfan.
 
@@ -112,20 +149,13 @@ One problem with plots of this nature is that they give a false impression of or
 
 ``` r
 set.seed(53)
-ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + stat_sample(aes(group=Sim))
-```
-
-    ## Warning in grid.Call.graphics(L_lines, x$x, x$y, index, x$arrow): semi-
-    ## transparency is not supported on this device: reported only once per page
-
-![](geom_fan_files/figure-markdown_github/stat_sample-1.png)
-
-``` r
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + 
   stat_sample(aes(group=Sim), n_samples=7, size=0.2, alpha=1)
 ```
 
-![](geom_fan_files/figure-markdown_github/stat_sample-2.png) This plot looks uglier than it might; in real data, we might expect correlation in *y* at adjacent values of *x*, giving smoother lines.
+![](geom_fan_files/figure-markdown_github/stat_sample-1.png)
+
+This plot looks uglier than it might; in real data, we might expect correlation in *y* at adjacent values of *x*, giving smoother lines.
 
 Plotting with pre-computed quantiles
 ------------------------------------
