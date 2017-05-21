@@ -8,7 +8,13 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
 ```
+
 [![Build Status](https://travis-ci.org/jasonhilton/ggfan.svg?branch=master)](https://travis-ci.org/jasonhilton/ggfan)
 
 ## Summarise a distribution through coloured intervals

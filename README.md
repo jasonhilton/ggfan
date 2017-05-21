@@ -16,10 +16,11 @@ Quick Start
 The provided `fake_df` data gives and example of the type of data you might want to plot with ggfan: it consists of 1000 sample of an outcome variable of interest for every covariate `x` value. We can plot this simply using standard `ggplot2` syntax and `geom_fan`. Convenient `ggplot` features such as themes, colour scales and facetting can also be used.
 
 ``` r
+
 ggplot(fake_df, aes(x=x, y=y)) + geom_fan() + theme_minimal() + scale_fill_distiller(palette="Spectral")
 ```
 
-![](README_files/figure-markdown_github/example-1.png)
+![](README-example-1.png)
 
 Further Information
 -------------------
