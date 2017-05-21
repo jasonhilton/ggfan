@@ -4,9 +4,6 @@
 #' @usage NULL
 #' @export
 StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
-  ## TODO error handling / checking
-  # what if the data doesn't have enough points at each x?
-  # do it test driven!
   setup_params = function(data, params) {
     params
   },

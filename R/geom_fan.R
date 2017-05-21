@@ -88,7 +88,6 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
       n <- nrow(data)
       if (n <= 2) return(grid::nullGrob())
 
-      # data <- dplyr::group_by(data, interval, x)
       data <- dplyr::group_by(data, x)
 
       data <- dplyr::mutate(data, ordering = hilo * x)
@@ -210,11 +209,6 @@ GeomIntervalPath <- ggplot2::ggproto("GeomIntervalPath", ggplot2::Geom,
 
     data <- data[order(data$line_id), , drop = FALSE]
     coords <- coord$transform(data, panel_scales)
-
-    # Silently drop lines with less than two points, preserving order
-    #rows <- stats::ave(seq_len(nrow(munched)), data$line_id, FUN = length)
-    #munched <- munched[rows >= 2, ]
-    #if (nrow(munched) < 2) return(zeroGrob())
 
     grid::polylineGrob(
       coords$x, coords$y, id = data$line_id,
