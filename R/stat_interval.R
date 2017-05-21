@@ -24,8 +24,8 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
     data_interval <- dplyr::mutate(data_interval, Interval=round(Interval, 3))
     data_interval <- dplyr::group_by(data_interval, x, Interval)
     df_n <- dplyr::filter(data_interval, quantile!=0.5)
-    df_n <- dplyr::summarise(dplyr::group_by(data,quantile, x), n=n())
-    if(min(df_n$n)!=2){
+    df_n <- dplyr::summarise(dplyr::group_by(df_n,Interval, x), n=n())
+    if(min(df_n$n)<2){
       stop(paste("Quantiles supplied must be in symmetric pairs about the median.",
                  "For example c(0.2,0.5,0.8) is admissable, c(0.1,0.5,0.51) is not"
       ))
