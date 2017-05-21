@@ -1,5 +1,5 @@
 #' Fanplots for ggplot2
-#' 
+#'
 #' Implements the functionality of the fanplot package as ggplot
 #' geoms. Designed for summarising MCMC samples from a posterior distribution,
 #' where a visualisation is desired for several values of a continuous
@@ -30,3 +30,8 @@
 #'
 #'
 NULL
+
+## quiets concerns of R CMD check re: the .'s that appear in pipelines
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".", "n" ,"x"))
+# see https://github.com/tidyverse/magrittr/issues/29 and
+# https://github.com/jennybc/googlesheets/commit/cf829306284601888035b2bad5988d6387187d6e
