@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-05-21
+2017-05-28
 
 Introduction
 ============
@@ -15,46 +15,9 @@ For convenience, a few other libraries are used during the vignette
 ``` r
 library(ggplot2)
 library(magrittr)
-```
-
-    ## 
-    ## Attaching package: 'magrittr'
-
-    ## The following objects are masked from 'package:testthat':
-    ## 
-    ##     equals, is_less_than, not
-
-``` r
 library(tidyr)
-```
-
-    ## 
-    ## Attaching package: 'tidyr'
-
-    ## The following object is masked from 'package:magrittr':
-    ## 
-    ##     extract
-
-``` r
 library(dplyr)
-```
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following object is masked from 'package:testthat':
-    ## 
-    ##     matches
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(ggfan)
 ```
 
@@ -83,12 +46,12 @@ head(fake_df)
 ```
 
     ##   x Sim          y
-    ## 1 1  X1  1.7766702
-    ## 2 2  X1 -0.5684017
-    ## 3 3  X1  0.1480171
-    ## 4 4  X1  2.0139673
-    ## 5 5  X1  2.3111821
-    ## 6 6  X1  2.1574121
+    ## 1 1  X1 -0.1416933
+    ## 2 2  X1 -1.4019186
+    ## 3 3  X1  3.9757752
+    ## 4 4  X1  1.1283004
+    ## 5 5  X1  2.8979044
+    ## 6 6  X1  1.2600280
 
 Now that we have a data set, let's visualise it using ggfan.
 
@@ -145,7 +108,7 @@ p + geom_line(data=q_df, mapping=aes(x=time,y=value, group=quantile, linetype=qu
 Adding individual sample realisations
 -------------------------------------
 
-One problem with plots of this nature is that they give a false impression of order, as one gets the impression that individual samples must follow the paths similar to those implied by the quantiles. A solution to this problem is to add a layer with just a few random samples to show possible paths actually implied by the posterior, as can be done in the original `fanplot` package. The `stat_sim` stat allows this, and may be customised through all the same arguments as geom\_path, upon which it is based.
+One problem with plots of this nature is that they give a false impression of order, as one gets the idea that individual samples must follow the paths similar to those implied by the quantiles. A solution to this problem is to add a layer with just a few random samples to show possible paths actually implied by the posterior, as can be done in the original `fanplot` package. The `stat_sample` stat allows this, and may be customised through all the same arguments as geom\_path, upon which it is based.
 
 ``` r
 set.seed(53)
@@ -155,7 +118,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() +
 
 ![](geom_fan_files/figure-markdown_github/stat_sample-1.png)
 
-This plot looks uglier than it might; in real data, we might expect correlation in *y* at adjacent values of *x*, giving smoother lines.
+This plot looks uglier than it might; in real data, we might expect correlation in each sample of *y* at adjacent values of *x*, giving smoother lines.
 
 Plotting with pre-computed quantiles
 ------------------------------------
@@ -259,4 +222,4 @@ There are existing geoms that do similar jobs, but nothing quite the same. The `
 Limitations
 -----------
 
-One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and is can be smoothly interpolated between `x` and `x+1`.
+One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and can be smoothly interpolated between `x` and `x+1`.
