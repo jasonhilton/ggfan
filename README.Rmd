@@ -38,7 +38,9 @@ ggplot(fake_df, aes(x=x, y=y)) + geom_fan() + theme_minimal() + scale_fill_disti
 
 ## Further Information
 
-A full description of the functionality of `ggfan` is provided in the vignette, provided [here](https://github.com/jasonhilton/ggfan/blob/master/vignettes/geom_fan.md)
+A full description of the functionality of `ggfan` is provided in the vignette, provided [here](https://github.com/jasonhilton/ggfan/blob/master/vignettes/geom_fan.md). 
+
+A brief example of using `ggfan` to plot `stan` output is given in a second vignette [here](https://github.com/jasonhilton/ggfan/blob/master/vignettes/ggfan_stan.md)
 
 
 
