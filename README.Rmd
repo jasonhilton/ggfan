@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 ## Summarise a distribution through coloured intervals
 
-This package is a ggplot-based implementation of some of the functionality of the (`fanplot` package)[https://gjabel.wordpress.com/category/r/fanplot/] by Guy Abel. Fanplot provides methods to visualise probability distributions by representing intervals of the distribution function with colours. Plotting samples from posterior distributions obtained through MCMC is a particular aim. A ggplot-based implementation is useful as it allows leverage of the power of ggplot features allowing, for example, facetting and easy theming.
+This package is a ggplot-based implementation of some of the functionality of the [`fanplot` package](https://gjabel.wordpress.com/category/r/fanplot/) by Guy Abel. Fanplot provides methods to visualise probability distributions by representing intervals of the distribution function with colours. Plotting samples from posterior distributions obtained through MCMC is a particular aim. A ggplot-based implementation is useful as it allows leverage of the power of [ggplot2](http://ggplot2.tidyverse.org/) features allowing, for example, facetting and easy theming.
 
 ## Installation
 At present the package is not on CRAN, although I plan to submit it in the near future. 
