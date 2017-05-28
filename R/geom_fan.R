@@ -87,7 +87,9 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
     draw_group = function(data, panel_scales, coord) {
       n <- nrow(data)
       if (n <= 2) return(grid::nullGrob())
-
+      # exclude median, avoiding floating point comparison problems.
+      tol <- 1e-6
+      data <- dplyr::filter(data, abs(interval - 0.0) > tol)
       data <- dplyr::group_by(data, x)
 
       data <- dplyr::mutate(data, ordering = hilo * x)

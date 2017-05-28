@@ -1,4 +1,3 @@
-
 #' See \code{\link[ggplot2]{ggplot2-ggproto}}
 #' @format NULL
 #' @usage NULL
@@ -18,15 +17,20 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
     if (!("quantile" %in% names(data))){
       data <- calc_quantiles(data, intervals)
     }
-
+    # need a condition here relating to specifying intervals?
+    tol <- 1e-6
     data_interval <- dplyr::mutate(data,
                                    Interval = abs(quantile - 0.5) * 2)
+    # round to avoid problems grouping by floating point.
     data_interval <- dplyr::mutate(data_interval, Interval=round(Interval, 3))
     data_interval <- dplyr::group_by(data_interval, x, Interval)
-    df_n <- dplyr::filter(data_interval, quantile!=0.5)
+    # exclude median, as is the empty interval (0.5,0.5).
+    # Use tol. to avoid floating point wierdness.
+    df_n <- dplyr::filter(data_interval, abs(quantile - 0.5) > tol)
     df_n <- dplyr::summarise(dplyr::group_by(df_n,Interval, x), n=n())
-    if(min(df_n$n)<2){
-      stop(paste("Quantiles supplied must be in symmetric pairs about the median.",
+    if(!all(df_n$n==2)){
+      stop(paste("Not all intervals have exactly two values at each x (high and low boundaries)",
+                 "Note quantiles supplied must be in symmetric pairs about the median.",
                  "For example c(0.2,0.5,0.8) is admissable, c(0.1,0.5,0.51) is not"
       ))
     }
