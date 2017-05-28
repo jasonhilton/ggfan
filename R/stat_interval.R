@@ -34,7 +34,9 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
                  "For example c(0.2,0.5,0.8) is admissable, c(0.1,0.5,0.51) is not"
       ))
     }
-    data_interval <- dplyr::mutate(data_interval, hilo=ifelse(y==max(y), 1, -1))
+    data_interval <- dplyr::mutate(data_interval,
+                                   hilo=ifelse(rank(y,ties.method="first")==n(),
+                                               1, -1))
     data_interval <- dplyr::ungroup(data_interval)
     return(data_interval)
   },
