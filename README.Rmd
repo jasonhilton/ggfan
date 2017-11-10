@@ -1,17 +1,16 @@
 ---
 title: "ggfan"
 author: "Jason Hilton"
-date: "6 May 2017"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "tools/README-"
 )
 ```
 
@@ -29,10 +28,8 @@ However, it can be installed directly from github using the devtools package: `d
 The provided `fake_df` data gives and example of the type of data you might want to plot with ggfan: it consists of 1000 samples of an outcome variable of interest at each value of a covariate `x`.  We can plot this simply using standard `ggplot2` syntax and `geom_fan`.
 Convenient `ggplot` features such as themes, colour scales and facetting can also be used.
 
-```{r example}
-
+```{r example, warning=FALSE, message=FALSE}
 ggplot(fake_df, aes(x=x, y=y)) + geom_fan() + theme_minimal() + scale_fill_distiller(palette="Spectral")
-
 
 ```
 
