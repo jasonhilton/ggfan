@@ -37,7 +37,8 @@ test_that("stat_interval give error with strings of quantiles",{
                                   function(x) paste0(x,"%"),
                                   FUN.VALUE ="4%"),
                   y= rep(1:4,3))
-  expect_warning(print(ggplot2::ggplot(df, ggplot2::aes(x=x, y=y, quantile=quantile)) +
+  expect_warning(ggplot2::ggplot_build(
+    ggplot2::ggplot(df, ggplot2::aes(x=x, y=y, quantile=quantile)) +
                                  stat_interval(intervals=0.2)))
   
 })

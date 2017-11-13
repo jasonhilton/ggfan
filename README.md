@@ -1,7 +1,7 @@
 ggfan
 ================
 Jason Hilton
-11 October, 2017
+13 November, 2017
 
 [![Build Status](https://travis-ci.org/jasonhilton/ggfan.svg?branch=master)](https://travis-ci.org/jasonhilton/ggfan)
 
@@ -13,7 +13,7 @@ This package is a ggplot-based implementation of some of the functionality of th
 Installation
 ------------
 
-At present the package is not on CRAN, although I plan to submit it in the near future. However, it can be installed directly from github using the devtools package: `devtools::install_github("jasonhilton/ggfan")`.
+The package has recently been submitted to CRAN. Installation directly from CRAN will be possible if and when the package is accepted: `install.packages("ggfan")` Otherwise, the package can be installed directly from github using the devtools package: `devtools::install_github("jasonhilton/ggfan")`.
 
 Quick Start
 -----------
