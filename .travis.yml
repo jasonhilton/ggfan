@@ -1,3 +1,4 @@
 language: r
 cache: packages
 dist: trusty
+warnings_are_error: true
