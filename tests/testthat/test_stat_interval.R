@@ -9,9 +9,10 @@ test_that("stat_interval warns when there are fewer observations than
            })
 
 test_that("mapping quantile aesthetic which are assymetric about median gives warning", {
-          df <- data.frame(x=rep(1:10,2), quantile=c(rep(0.2,10), rep(0.6,10)),y=c(rnorm(20)))
+          df <- data.frame(x=rep(1:10,2), quantile=c(rep(0.2,10), rep(0.6,10)),
+                           y=c(rnorm(20)))
           expect_warning(print(ggplot2::ggplot(df, ggplot2::aes(x=x,y=y,quantile=quantile)) +
-                      stat_interval()))
+                      stat_interval(intervals=c(0.2,0.6))))
 
 })
 
@@ -48,4 +49,10 @@ test_that("stat_interval throws error when given nonsensical quantiles",{
                  stat_interval(intervals=0.2)))
 })
 
-
+test_that("stat_interval gives error when precomputed quantiles and requested
+           intervals don't match", {
+             df <- data.frame(x=rep(1:10,2), quantile=c(rep(0.1,10), rep(0.9,10)),
+                              y=c(rnorm(10,-3) ,rnorm(10,3)))
+             expect_warning(print(ggplot2::ggplot(df, ggplot2::aes(x=x,y=y,quantile=quantile)) +
+                                    stat_interval(intervals=c(0.6))))
+           })

@@ -41,7 +41,16 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
       # Filter to only contain those intervals requested
       data_interval <- dplyr::filter(data_interval,
                               .in_numeric(Interval, intervals, tol))
+      if (dim(data_interval)[1] ==0){
+        stop("No rows in plotting data frame. This may be because the intervals 
+              requested do not correspond to the precomputed quantiles you 
+              provided in the data. \n
+              e.g. To plot interval 0.5, you need quantiles 0.25 and 0.75 \n
+              Default intervals are 0, 0.5, and 0.9, so quantiles needed are 
+              c(0.05,0.25,0.5,0.75,0.95)")
+      }
     }
+    
     data_interval <- dplyr::group_by(data_interval, x, Interval)
     # exclude median, as is the empty interval (0.5,0.5).
     # Use tol. to avoid floating point wierdness.
