@@ -157,7 +157,7 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
 #'
 #'
 #' # use precomputed quantiles - reducing storage requirements.
-#' intervals = 1:19/20
+#' intervals = c(0,50,90)/100
 #' fake_q <- calc_quantiles(fake_df, intervals=intervals)
 #' # intervals in geom_fan must be the same as used to compute quantiles.
 #' ggplot(fake_q, aes(x=x,y=y, quantile=quantile)) +
