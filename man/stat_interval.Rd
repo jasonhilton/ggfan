@@ -2,10 +2,7 @@
 % Please edit documentation in R/stat_interval.R
 \name{stat_interval}
 \alias{stat_interval}
-\title{Very similar to \code{\link{geom_interval}}, except uses
-\code{\link[ggplot2]{geom_line}} to handle the plotting. This makes handling
-plotting of intervals for several groups difficult to achieve, so
-\code{\link{geom_interval}} is prefered.}
+\title{Line plot visualising intervals of a distribution}
 \usage{
 stat_interval(mapping = NULL, data = NULL, stat = "interval_fctr",
   position = "identity", na.rm = FALSE, show.legend = NA,
