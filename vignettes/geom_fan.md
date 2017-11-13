@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-05-28
+2017-11-13
 
 Introduction
 ============
@@ -16,8 +16,35 @@ For convenience, a few other libraries are used during the vignette
 library(ggplot2)
 library(magrittr)
 library(tidyr)
-library(dplyr)
+```
 
+    ## Warning: package 'tidyr' was built under R version 3.4.2
+
+    ## 
+    ## Attaching package: 'tidyr'
+
+    ## The following object is masked from 'package:magrittr':
+    ## 
+    ##     extract
+
+``` r
+library(dplyr)
+```
+
+    ## Warning: package 'dplyr' was built under R version 3.4.2
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
 library(ggfan)
 ```
 
@@ -46,12 +73,12 @@ head(fake_df)
 ```
 
     ##   x Sim          y
-    ## 1 1  X1 -0.1416933
-    ## 2 2  X1 -1.4019186
-    ## 3 3  X1  3.9757752
-    ## 4 4  X1  1.1283004
-    ## 5 5  X1  2.8979044
-    ## 6 6  X1  1.2600280
+    ## 1 1  X1 -0.4958619
+    ## 2 2  X1 -1.1269812
+    ## 3 3  X1  2.1014106
+    ## 4 4  X1  2.5837114
+    ## 5 5  X1  2.5731930
+    ## 6 6  X1  3.2495456
 
 Now that we have a data set, let's visualise it using ggfan.
 
@@ -61,6 +88,8 @@ Firstly, we can summarise the distribution by ploting lines connecting upper and
 p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
 print(p)
 ```
+
+    ## Warning: package 'bindrcpp' was built under R version 3.4.1
 
 ![](geom_fan_files/figure-markdown_github/plot_stat_interval-1.png)
 
@@ -90,7 +119,7 @@ ggplot(fake_df, aes(x=x, y= y)) + geom_fan() + geom_interval() +
 
 ![](geom_fan_files/figure-markdown_github/both_layers-1.png)
 
-In this case, we know the theoretical quantiles of the distribution, as we generated from a normal distribution, so we can check the estimated intervals correspond to what we expect. We should see that the 25th and 75th quantile correspond to the colour band for the 50% interval.
+In this case, we know the theoretical quantiles of the distribution, as we generated from a normal distribution, so we can check the estimated intervals correspond to what we expect. We should see that the 25th and 75th quantile correspond approximately to the colour band for the 50% interval.
 
 ``` r
 quants <- c(2.5,10,25,50,75,90,97.5) 
@@ -172,7 +201,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradient(lo
 
 ![](geom_fan_files/figure-markdown_github/spectral-2.png)
 
-You can also specify the intervals you want to use for geom\_fan. If we specifiy just the 50%, 80% and 95% intervals, we can see this match up with the relevant quantiles of the theoretical distribution.
+You can also specify the intervals you want to use for geom\_fan. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
 
 ``` r
 ggplot(fake_df, aes(x=x, y=y)) + geom_fan(intervals=c(50,80,95)/100) +
