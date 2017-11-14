@@ -13,7 +13,7 @@
 #' allow estimation of the specified quantiles warrant a fanplot.
 #'
 #' @inheritParams ggplot2::layer
-#' @param stat Use to overide the default use of \code{stat_interval}
+#' @param stat Use to override the default use of \code{stat_interval}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
 #' @param ... other arguments passed on to \code{\link{layer}}. These are
@@ -138,7 +138,7 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
 #' @export
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_line
-#' @param stat Use to overide the default use of \code{stat_interval}
+#' @param stat Use to override the default use of \code{stat_interval}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
 #'

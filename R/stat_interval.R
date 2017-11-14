@@ -8,49 +8,49 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
   },
 
   compute_group = function(data, scales, params, intervals) {
-    
+
     precomputed_quantiles <- "quantile" %in% names(data)
     if(length(data$x)<2){
       stop("Too few rows in plotting data. This may be because invalid data has
            been provided")
     }
-    
+
     # calculate quantiles if not already present.
     if (!precomputed_quantiles){
       data <- calc_quantiles(data, intervals)
     } else {
       if (class(data$quantile)!= "numeric"){
-        stop("Please ensure quantiles are inputed as a numeric vector with 
+        stop("Please ensure quantiles are inputed as a numeric vector with
              values bounded by 0 and 1")
       }
       if (max(data$quantile) > 1 | min(data$quantile) < 0){
-        stop("Please ensure quantiles are inputed as a numeric vector with 
+        stop("Please ensure quantiles are inputed as a numeric vector with
              values bounded by 0 and 1")
       }
     }
-    
+
     tol <- 1e-6
     data_interval <- dplyr::mutate(data,
                                    Interval = abs(quantile - 0.5) * 2)
     # round to avoid problems grouping by floating point.
     data_interval <- dplyr::mutate(data_interval, Interval=round(Interval, 3))
-    
+
     if(precomputed_quantiles){
       # if the quantiles were precomputed they do not necessarily correspond
-      # to intervals in the argument. 
+      # to intervals in the argument.
       # Filter to only contain those intervals requested
       data_interval <- dplyr::filter(data_interval,
                               .in_numeric(Interval, intervals, tol))
       if (dim(data_interval)[1] ==0){
-        stop("No rows in plotting data frame. This may be because the intervals 
-              requested do not correspond to the precomputed quantiles you 
+        stop("No rows in plotting data frame. This may be because the intervals
+              requested do not correspond to the precomputed quantiles you
               provided in the data. \n
               e.g. To plot interval 0.5, you need quantiles 0.25 and 0.75 \n
-              Default intervals are 0, 0.5, and 0.9, so quantiles needed are 
+              Default intervals are 0, 0.5, and 0.9, so quantiles needed are
               c(0.05,0.25,0.5,0.75,0.95)")
       }
     }
-    
+
     data_interval <- dplyr::group_by(data_interval, x, Interval)
     # exclude median, as is the empty interval (0.5,0.5).
     # Use tol. to avoid floating point wierdness.
@@ -155,7 +155,7 @@ StatIntervalFctr <- ggplot2::ggproto("StatIntervalFctr", StatInterval,
 #'  Very similar to \code{\link{geom_interval}}, except uses
 #' \code{\link[ggplot2]{geom_line}} to handle the plotting. This makes handling
 #' plotting of intervals for several groups difficult to achieve, so
-#' \code{\link{geom_interval}} is prefered.
+#' \code{\link{geom_interval}} is preferred.
 #'
 #' @inheritParams geom_interval
 #' @export
@@ -216,12 +216,12 @@ stat_sample <- function (mapping = NULL, data = NULL, stat = "sample",
 
 #' Find elements of one numeric vector in another.
 #'
-#' Find which elements of `a` are equal to at least one element in `b`, to 
+#' Find which elements of `a` are equal to at least one element in `b`, to
 #' within some tolerance tol.
-#' 
+#'
 #' @param a The vector for which comparison are to be made
 #' @param b The vector to match against.
-#' 
+#'
 #' @return A vector of logical values the same length as `a` describing whether
 #' this vector element is close to at least one element in `b`
 #'
