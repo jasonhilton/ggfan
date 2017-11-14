@@ -1,4 +1,9 @@
-## Resubmission
+## Resubmission 2
+This is a resubmission. In this version I have:
+
+* Corrected package and software names in DESCRIPTION from backticks to single quotes.
+
+## Resubmission 1
 This is a resubmission. In this version I have:
 
 * Placed package and software names in single quotes were they are used.
