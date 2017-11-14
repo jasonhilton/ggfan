@@ -1,4 +1,4 @@
-#' A stan_fit object used in the `ggfan_stan` vignette, containing posterior samples
+#' A stan_fit object used in the \code{ggfan_stan} vignette, containing posterior samples
 #' from a latent gaussian process model. This is provided as data to avoid 
 #' having to conduct computationally expensive sampling when producing the vignettes.
 #' 

@@ -108,9 +108,9 @@ stan_rhat(gp_model_fit)
 ```
 
 
-We now want to convert the stan output to values that can be easily plotted using ggfan. We start with the latent variable $z$. We first extract `z` from the fitted stan model with the `as.matrix` method of the `stan_fit` object, before adding the `x` covariate values with `mutate`.
+We now want to convert the stan output to values that can be easily plotted using `ggfan`. We start with the latent variable $z$. We first extract `z` from the fitted stan model with the `as.matrix` method of the `stan_fit` object, before adding the `x` covariate values with `mutate`.
 
-Next, we convert to `tidy` data format using the `tidyr` function `gather`. And now we are ready to plot with ggfan.
+Next, we convert to tidy data format using the `tidyr` function `gather`. And now we are ready to plot with `ggfan`.
 
 
 ```{r convert_to_list}
@@ -140,5 +140,5 @@ ggplot(y_df_long, aes(x=x,y=y)) + geom_fan() +
 
 ```
 
-A similar process can be folowed when using other mcmc sampling packages, such as bugs or jags.
+A similar process can be folowed when using other MCMC sampling packages, such as `bugs` or `jags`.
 

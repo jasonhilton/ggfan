@@ -1,6 +1,6 @@
 #' Fanplots for ggplot2
 #'
-#' Implements the functionality of the fanplot package as ggplot
+#' Implements the functionality of the \code{fanplot} package as \code{ggplot}
 #' geoms. Designed for summarising MCMC samples from a posterior distribution,
 #' where a visualisation is desired for several values of a continuous
 #' covariate.

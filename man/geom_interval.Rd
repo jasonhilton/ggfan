@@ -29,7 +29,7 @@ plot. You must supply \code{mapping} if there is no plot mapping.}
    the plot data. The return value must be a \code{data.frame.}, and
    will be used as the layer data.}
 
-\item{stat}{Use to override the default use of \code{stat_interval}}
+\item{stat}{Use to override the default use of \code{\link{stat_interval}}}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -66,7 +66,7 @@ to the paired geom/stat.}
 For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
 intervals containing increasing proportions of the total density of \code{y}.
 Boundaries of intervals are mapped to linetypes. Quantiles can also be
-precomputed and mapped to the aesthetic `quantile`.
+precomputed and mapped to the aesthetic \code{quantile}.
 This function is designed with the need to summarise MCMC posterior
 distributions in mind.
 }

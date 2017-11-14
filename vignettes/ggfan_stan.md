@@ -7,7 +7,11 @@ Jason Hilton
 library(rstan)
 ```
 
+    ## Warning: package 'rstan' was built under R version 3.4.1
+
     ## Loading required package: StanHeaders
+
+    ## Warning: package 'StanHeaders' was built under R version 3.4.1
 
     ## rstan (Version 2.16.2, packaged: 2017-07-03 09:24:58 UTC, GitRev: 2e1f913d3ca3)
 
@@ -31,7 +35,11 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(tibble)
+```
 
+    ## Warning: package 'tibble' was built under R version 3.4.2
+
+``` r
 library(ggfan)
 ```
 
@@ -52,7 +60,7 @@ plot(x,y[,1])
 points(x,y[,2])
 ```
 
-![](ggfan_stan_files/figure-markdown_github-ascii_identifiers/stan_example-1.png)
+![](ggfan_stan_files/figure-markdown_github/stan_example-1.png)
 
 The stan model used is a modified version of the Gaussian Process (GP) examples bundled with `rstan`, and is also based on the latent-variable discussion in the Bayesian Data Anaylsis edition 3 (Gelman et al. 2015). GPs are semi-parametric models based on the assumption that outcomes are joint multivariate normal, and that observations that are close to each other in terms of their covariate values are correlated in outputs.
 
@@ -121,11 +129,11 @@ stan_rhat(gp_model_fit)
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](ggfan_stan_files/figure-markdown_github-ascii_identifiers/rhat-1.png)
+![](ggfan_stan_files/figure-markdown_github/rhat-1.png)
 
-We now want to convert the stan output to values that can be easily plotted using ggfan. We start with the latent variable *z*. We first extract `z` from the fitted stan model with the `as.matrix` method of the `stan_fit` object, before adding the `x` covariate values with `mutate`.
+We now want to convert the stan output to values that can be easily plotted using `ggfan`. We start with the latent variable *z*. We first extract `z` from the fitted stan model with the `as.matrix` method of the `stan_fit` object, before adding the `x` covariate values with `mutate`.
 
-Next, we convert to `tidy` data format using the `tidyr` function `gather`. And now we are ready to plot with ggfan.
+Next, we convert to tidy data format using the `tidyr` function `gather`. And now we are ready to plot with `ggfan`.
 
 ``` r
 z_df <- as_tibble(t(as.matrix(gp_model_fit, "z")))
@@ -137,7 +145,7 @@ ggplot(z_df_long, aes(x=x,y=z)) + geom_fan() + geom_line(data=data.frame(x=x,y=s
   scale_fill_distiller()
 ```
 
-![](ggfan_stan_files/figure-markdown_github-ascii_identifiers/convert_to_list-1.png)
+![](ggfan_stan_files/figure-markdown_github/convert_to_list-1.png)
 
 We can also follow the same process in order to examine the predictive distribution of the counts themselves. These are integers so naturally appear more discrete.
 
@@ -153,6 +161,6 @@ ggplot(y_df_long, aes(x=x,y=y)) + geom_fan() +
   scale_fill_distiller() + geom_interval()
 ```
 
-![](ggfan_stan_files/figure-markdown_github-ascii_identifiers/observations-1.png)
+![](ggfan_stan_files/figure-markdown_github/observations-1.png)
 
-A similar process can be folowed when using other mcmc sampling packages, such as bugs or jags.
+A similar process can be folowed when using other MCMC sampling packages, such as `bugs` or `jags`.

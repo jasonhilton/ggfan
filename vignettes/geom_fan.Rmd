@@ -10,10 +10,10 @@ vignette: >
 ---
 
 # Introduction
-This package is a ggplot-based implementation of some of the functionality of (`fanplot` package)[https://gjabel.wordpress.com/category/r/fanplot/] by Guy Abel. Fanplot provides methods to visualise probability distributions by representing intervals of the distribution function with colours.  A ggplot implementation of the package is useful as it allows leverage of the power of ggplot features allowing, for example, facetting and easy theming. This vignette aims to demonstrate some simple features of ggfan.
+This package is a `ggplot`-based implementation of some of the functionality of (`fanplot` package)[https://gjabel.wordpress.com/category/r/fanplot/] by Guy Abel. The `fanplot` package provides methods to visualise probability distributions by representing intervals of the distribution function with colours.  A `ggplot` implementation of the package is useful as it allows leverage of the power of `ggplot` features allowing, for example, facetting and easy theming. This vignette aims to demonstrate some simple features of `ggfan`.
 
 
-This is a work in progress. Please let me know if I anything is not clear in this vignette, or if you think any additions or ammendments I need to make to the package. Similarly, if you spot any bugs or errors let me know. The github issue page is the best place for dealing with this. 
+Please let me know if I anything is not clear in this vignette, or if you think any additions or ammendments I need to make to the package. Similarly, if you spot any bugs or errors let me know. The [github issue page](https://github.com/jasonhilton/ggfan/issues) is the best place for dealing with this. 
 
 
 For convenience, a few other libraries are used during the vignette
@@ -31,7 +31,7 @@ library(ggfan)
 We will create some fake data for the purposes of demonstrating the `geom_fan` function.
 Imagine the data we are creating is, for example, a set of posterior samples obtained through MCMC sampling.
 
-Following 'tidyverse' convention, ggfan uses long-form data only, so that each row is one sample of the distribution in question at a given covariate value.
+Following 'tidyverse' convention, `ggfan` uses long-form data only, so that each row is one sample of the distribution in question at a given covariate value.
 
 ```{r simulate_data}
 # generate mean and variance for sequence of samples over time
@@ -51,9 +51,9 @@ head(fake_df)
 
 ```
 
-Now that we have a data set, let's visualise it using ggfan.
+Now that we have a data set, let's visualise it using `ggfan`.
 
-Firstly, we can summarise the distribution by ploting lines connecting upper and lower boundaries of central probability intervals using stat_interval. This calculates the intervals, and by default associates these with the linetype aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
+Firstly, we can summarise the distribution by ploting lines connecting upper and lower boundaries of central probability intervals using `stat_interval`. This calculates the intervals, and by default associates these with the `linetype` aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
 
 ```{r plot_stat_interval}
 p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
@@ -61,7 +61,7 @@ print(p)
 p + geom_interval(aes(colour=..Interval..), intervals=c(0,0.5,0.9,0.99))
 ```
 
-We can also try and describe the distribution in a more comprehensive manner by using geom_fan.
+We can also try and describe the distribution in a more comprehensive manner by using `geom_fan`.
 
 ```{r plot_geom_fan}
 
@@ -69,9 +69,9 @@ p <- ggplot(fake_df, aes(x=x,y=y)) + geom_fan()
 print(p)
 ```
 
-The `geom_fan` geometry is associated with an Interval `stat`, which calculates the empirical quantiles of the variable that is mapped to `y`, and returns a data frame with the location of central intervals estimated to contain increasing percentages of the total density. These increasing intervals are then mapped to a ggplot (or scales) continuous colour scale.
+The `geom_fan` geometry is associated with an Interval `stat`, which calculates the empirical quantiles of the variable that is mapped to `y`, and returns a data frame with the location of central intervals estimated to contain increasing percentages of the total density. These increasing intervals are then mapped to a `ggplot` (or `scales`) continuous colour scale.
 
-We can combine this with the stat_interval to emphasise particular intervals by using two layers on the same plot. Customising the the linetype scale is also possible, as shown below. Using dotted lines to indicate more extreme intervals seems more natural to me.
+We can combine this with `stat_interval` to emphasise particular intervals by using two layers on the same plot. Customising the `linetype` scale is also possible, as shown below. Using dotted lines to indicate more extreme intervals seems more natural to me.
 
 ```{r both_layers}
 ggplot(fake_df, aes(x=x, y= y)) + geom_fan() + geom_interval() + 
@@ -96,7 +96,7 @@ p + geom_line(data=q_df, mapping=aes(x=time,y=value, group=quantile, linetype=qu
 ```
 
 ## Adding individual sample realisations
-One problem with plots of this nature is that they give a false impression of order, as one gets the idea that individual samples must follow the paths similar to those implied by the quantiles. A solution to this problem is to add a layer with just a few random samples to show possible paths actually implied by the posterior, as can be done in the original `fanplot` package. The `stat_sample` stat allows this, and may be customised through all the same arguments as geom_path, upon which it is based.
+One problem with plots of this nature is that they give a false impression of order, as one gets the idea that individual samples must follow the paths similar to those implied by the quantiles. A solution to this problem is to add a layer with just a few random samples to show possible paths actually implied by the posterior, as can be done with the original `fanplot` package. The `stat_sample` stat allows this, and may be customised through all the same arguments as `geom_path`, upon which it is based.
 
 ```{r stat_sample}
 set.seed(53)
@@ -125,7 +125,7 @@ ggplot(fake_q,  aes(x=x,y=y,quantile=quantile)) + geom_fan()
 
 ## Customising ggfan characteristics
 
-I think this kind of plot looks better with a white background, not the classic ggplot grey. The implementation as a geom means we can easily change this by applying a different theme.
+I think this kind of plot looks better with a white background, not the classic `ggplot` grey. The implementation as a `geom` means we can easily change this by applying a different theme.
 
 ```{r plot_geom_fan_bw}
 
@@ -144,7 +144,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradient(lo
 ```
 
 
-You can also specify the intervals you want to use for geom_fan. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
+You can also specify the intervals you want to use for `geom_fan`. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
 
 ```{r probs}
 
@@ -168,7 +168,7 @@ ggplot(fake_df_sex, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradien
 
 ```
 
-We can also display the distributions on the same axes using geom_interval, in order to facilitate better comparison. 
+We can also display the distributions on the same axes using `geom_interval`, in order to facilitate better comparison. 
 
 ```{r stat_interval_group}
 
@@ -176,7 +176,7 @@ p <- ggplot(fake_df_sex, aes(x=x, y=y,group=Sex,colour=Sex)) + geom_interval() +
 print(p)
 ```
 
-This is also possible using geom_fan, although because at the moment it is not possible to assign different colour scales to each group, this is less useful.
+This is also possible using `geom_fan`, although because at the moment it is not possible to assign different colour scales to each group, this is less useful.
 
 ```{r geom_fan_group}
 
@@ -187,10 +187,10 @@ print(p)
 
 ## Alternatives
 
-There are existing geoms that do similar jobs, but nothing quite the same. The `stat_quantile` stat fits model-based quantiles to the data, while the various density stats and geoms also work to summarise probability distributions. The `stat_summary` provides functions to summarise `y` values for each value of x, as is done here, but does not provide for fan-like geoms.
+There are existing geoms that do similar jobs, but nothing quite the same. The `stat_quantile` stat fits model-based quantiles to the data, while the various density stats and geoms also work to summarise probability distributions. The `stat_summary` provides functions to summarise `y` values for each value of `x`, as is done here, but does not provide for fan-like geoms.
 
 ## Limitations
-One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and can be smoothly interpolated between `x` and `x+1`. 
+One potential problem with the approach here is the interpolation between neighbouring x-values. There is a underlying assumption that the `x` value is continuous and can be smoothly interpolated between `x` and `x + 1`. 
 
 
 

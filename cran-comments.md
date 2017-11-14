@@ -1,3 +1,12 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Placed package and software names in single quotes were they are used.
+
+* Fixed documentation so that packages, functions and arguments are always formatted correctly.
+
+* Added URL and BugReports fields to the DESCRIPTION file, pointing to the package github page.
+
 ## Test environments
 * ubuntu 16.04 desktop machine
 * Windows 7 Enterprise desktop machine

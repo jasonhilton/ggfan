@@ -3,7 +3,7 @@
 \docType{data}
 \name{gp_model_fit}
 \alias{gp_model_fit}
-\title{A stan_fit object used in the `ggfan_stan` vignette, containing posterior samples
+\title{A stan_fit object used in the \code{ggfan_stan} vignette, containing posterior samples
 from a latent gaussian process model. This is provided as data to avoid 
 having to conduct computationally expensive sampling when producing the vignettes.}
 \format{A `stan_fit` object containing samples of the following parameters.

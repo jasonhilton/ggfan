@@ -1,7 +1,7 @@
 ggfan
 ================
 Jason Hilton
-13 November, 2017
+14 November, 2017
 
 [![Build Status](https://travis-ci.org/jasonhilton/ggfan.svg?branch=master)](https://travis-ci.org/jasonhilton/ggfan)
 

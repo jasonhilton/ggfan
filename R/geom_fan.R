@@ -2,21 +2,21 @@
 #'
 #' Fan Plots allow the distribution of a variable to be visualised by
 #' representing sets of central probability intervals through colour.
-#' For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
+#' For every value of \code{x}, \code{geom_fan} computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
 #' Intervals are mapped to a continuous colour scale, so that changes in colour
 #' represent intervals covering an increasing proportion of total density.
-#' Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
+#' Quantiles can also be precomputed and mapped to the aesthetic \code{quantile}.
 #' This function is designed with the need to summarise MCMC posterior
 #' distributions in mind, and implements the functionality of the \code{fanplot}
-#' package in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to
-#' allow estimation of the specified quantiles warrant a fanplot.
+#' package in \code{ggplot2}. Note that there should be enough observations of 
+#' \code{y} at each \code{x} to allow estimation of the specified quantiles.
 #'
 #' @inheritParams ggplot2::layer
-#' @param stat Use to override the default use of \code{stat_interval}
+#' @param stat Use to override the default use of \code{\link{stat_interval}}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
-#' @param ... other arguments passed on to \code{\link{layer}}. These are
+#' @param ... other arguments passed on to \code{layer}. These are
 #'   often aesthetics, used to set an aesthetic to a fixed value, like
 #'   \code{color = "red"} or \code{size = 3}. They may also be parameters
 #'   to the paired geom/stat.
@@ -118,7 +118,7 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
 #' For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
 #' Boundaries of intervals are mapped to linetypes. Quantiles can also be
-#' precomputed and mapped to the aesthetic `quantile`.
+#' precomputed and mapped to the aesthetic \code{quantile}.
 #' This function is designed with the need to summarise MCMC posterior
 #' distributions in mind.
 #'
@@ -138,7 +138,7 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
 #' @export
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_line
-#' @param stat Use to override the default use of \code{stat_interval}
+#' @param stat Use to override the default use of \code{\link{stat_interval}}
 #' @param intervals specify the collection of intervals to be represented in the
 #' fan.
 #'

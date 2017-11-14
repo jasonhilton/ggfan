@@ -28,7 +28,7 @@ plot. You must supply \code{mapping} if there is no plot mapping.}
    the plot data. The return value must be a \code{data.frame.}, and
    will be used as the layer data.}
 
-\item{stat}{Use to override the default use of \code{stat_interval}}
+\item{stat}{Use to override the default use of \code{\link{stat_interval}}}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -45,7 +45,7 @@ the default plot specification, e.g. \code{\link{borders}}.}
 \item{intervals}{specify the collection of intervals to be represented in the
 fan.}
 
-\item{...}{other arguments passed on to \code{\link{layer}}. These are
+\item{...}{other arguments passed on to \code{layer}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{color = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
@@ -53,15 +53,15 @@ to the paired geom/stat.}
 \description{
 Fan Plots allow the distribution of a variable to be visualised by
 representing sets of central probability intervals through colour.
-For every value of \code{x}, geom_fan computes quantiles of \code{y} and uses these to plot
+For every value of \code{x}, \code{geom_fan} computes quantiles of \code{y} and uses these to plot
 intervals containing increasing proportions of the total density of \code{y}.
 Intervals are mapped to a continuous colour scale, so that changes in colour
 represent intervals covering an increasing proportion of total density.
-Quantiles can also be precomputed and mapped to the aesthetic `quantile`.
+Quantiles can also be precomputed and mapped to the aesthetic \code{quantile}.
 This function is designed with the need to summarise MCMC posterior
 distributions in mind, and implements the functionality of the \code{fanplot}
-package in \code{ggplot2}. Note that there should be enough observations of $y$ at each x to
-allow estimation of the specified quantiles warrant a fanplot.
+package in \code{ggplot2}. Note that there should be enough observations of 
+\code{y} at each \code{x} to allow estimation of the specified quantiles.
 }
 \section{Aesthetics}{
 
