@@ -3,4 +3,3 @@
 .travis.yml
 README.Rmd
 cran-comments.md
-NEWS.md
