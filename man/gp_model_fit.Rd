@@ -3,7 +3,7 @@
 \docType{data}
 \name{gp_model_fit}
 \alias{gp_model_fit}
-\title{A stan_fit object used in the \code{ggfan_stan} vignette, containing posterior samples
+\title{A \code{stan_fit} object used in the \code{ggfan_stan} vignette, containing posterior samples
 from a latent gaussian process model. This is provided as data to avoid 
 having to conduct computationally expensive sampling when producing the vignettes.}
 \format{A `stan_fit` object containing samples of the following parameters.
@@ -13,7 +13,7 @@ having to conduct computationally expensive sampling when producing the vignette
   \item{z}{Latent poisson rate}
   \item{y_gen}{Posterior predictive sample of counts `y`} 
 }
-See the help page for `rstan::stanfit` for more details.}
+See the help page for \code{\link[rstan]{stanfit}} for more details.}
 \usage{
 gp_model_fit
 }

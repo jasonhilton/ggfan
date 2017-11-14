@@ -117,7 +117,7 @@ GeomIntervalPoly <- ggplot2::ggproto("GeomIntervalPoly", ggplot2::Geom,
 #'
 #' For every value of \code{x}, computes quantiles of \code{y} and uses these to plot
 #' intervals containing increasing proportions of the total density of \code{y}.
-#' Boundaries of intervals are mapped to linetypes. Quantiles can also be
+#' Boundaries of intervals are mapped to \code{linetype}. Quantiles can also be
 #' precomputed and mapped to the aesthetic \code{quantile}.
 #' This function is designed with the need to summarise MCMC posterior
 #' distributions in mind.
