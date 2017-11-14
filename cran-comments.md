@@ -2,6 +2,7 @@
 * ubuntu 16.04 desktop machine
 * Windows 7 Enterprise desktop machine
 * ubuntu 14.04 on travis-ci
+* win-builder
 
 ## R CMD check results
 There were no ERRORs or WARNINGs
