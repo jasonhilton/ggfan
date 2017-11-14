@@ -1,6 +1,6 @@
 Package: ggfan
 Type: Package
-Title: Summarise A Distribution Through Coloured Intervals
+Title: Summarise a Distribution Through Coloured Intervals
 Description: Implements the functionality of the fanplot package as ggplot
   geoms. Designed for summarising MCMC samples from a posterior distribution,
   where a visualisation is desired for several values of a continuous covariate.

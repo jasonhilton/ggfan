@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-11-13
+2017-11-14
 
 Introduction
 ============
@@ -18,8 +18,6 @@ library(magrittr)
 library(tidyr)
 ```
 
-    ## Warning: package 'tidyr' was built under R version 3.4.2
-
     ## 
     ## Attaching package: 'tidyr'
 
@@ -30,8 +28,6 @@ library(tidyr)
 ``` r
 library(dplyr)
 ```
-
-    ## Warning: package 'dplyr' was built under R version 3.4.2
 
     ## 
     ## Attaching package: 'dplyr'
@@ -73,12 +69,12 @@ head(fake_df)
 ```
 
     ##   x Sim          y
-    ## 1 1  X1 -0.4958619
-    ## 2 2  X1 -1.1269812
-    ## 3 3  X1  2.1014106
-    ## 4 4  X1  2.5837114
-    ## 5 5  X1  2.5731930
-    ## 6 6  X1  3.2495456
+    ## 1 1  X1 -1.8339089
+    ## 2 2  X1  1.7961975
+    ## 3 3  X1  1.7853362
+    ## 4 4  X1  0.7570461
+    ## 5 5  X1  4.3158383
+    ## 6 6  X1  1.3923537
 
 Now that we have a data set, let's visualise it using ggfan.
 
@@ -89,15 +85,13 @@ p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
 print(p)
 ```
 
-    ## Warning: package 'bindrcpp' was built under R version 3.4.1
-
-![](geom_fan_files/figure-markdown_github/plot_stat_interval-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/plot_stat_interval-1.png)
 
 ``` r
 p + geom_interval(aes(colour=..Interval..), intervals=c(0,0.5,0.9,0.99))
 ```
 
-![](geom_fan_files/figure-markdown_github/plot_stat_interval-2.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/plot_stat_interval-2.png)
 
 We can also try and describe the distribution in a more comprehensive manner by using geom\_fan.
 
@@ -106,7 +100,7 @@ p <- ggplot(fake_df, aes(x=x,y=y)) + geom_fan()
 print(p)
 ```
 
-![](geom_fan_files/figure-markdown_github/plot_geom_fan-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/plot_geom_fan-1.png)
 
 The `geom_fan` geometry is associated with an Interval `stat`, which calculates the empirical quantiles of the variable that is mapped to `y`, and returns a data frame with the location of central intervals estimated to contain increasing percentages of the total density. These increasing intervals are then mapped to a ggplot (or scales) continuous colour scale.
 
@@ -117,7 +111,7 @@ ggplot(fake_df, aes(x=x, y= y)) + geom_fan() + geom_interval() +
   scale_linetype_manual(values=c("solid", "dashed", "dotted"))
 ```
 
-![](geom_fan_files/figure-markdown_github/both_layers-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/both_layers-1.png)
 
 In this case, we know the theoretical quantiles of the distribution, as we generated from a normal distribution, so we can check the estimated intervals correspond to what we expect. We should see that the 25th and 75th quantile correspond approximately to the colour band for the 50% interval.
 
@@ -132,7 +126,7 @@ q_df <-gather(q_df,key=quantile, value=value, -time)
 p + geom_line(data=q_df, mapping=aes(x=time,y=value, group=quantile, linetype=quantile))
 ```
 
-![](geom_fan_files/figure-markdown_github/check_theoretical-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/check_theoretical-1.png)
 
 Adding individual sample realisations
 -------------------------------------
@@ -145,7 +139,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() +
   stat_sample(aes(group=Sim), n_samples=7, size=0.2, alpha=1)
 ```
 
-![](geom_fan_files/figure-markdown_github/stat_sample-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/stat_sample-1.png)
 
 This plot looks uglier than it might; in real data, we might expect correlation in each sample of *y* at adjacent values of *x*, giving smoother lines.
 
@@ -174,7 +168,7 @@ dim(fake_df); dim(fake_q)
 ggplot(fake_q,  aes(x=x,y=y,quantile=quantile)) + geom_fan()
 ```
 
-![](geom_fan_files/figure-markdown_github/quantiles_direct-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/quantiles_direct-1.png)
 
 Customising ggfan characteristics
 ---------------------------------
@@ -185,7 +179,7 @@ I think this kind of plot looks better with a white background, not the classic 
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw()
 ```
 
-![](geom_fan_files/figure-markdown_github/plot_geom_fan_bw-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/plot_geom_fan_bw-1.png)
 
 We can also change the colour scale associated with the probability intervals. Here we use the rather colourful spectral palette, and also specify high and low colours as pink and red respectively. The user may prefer to come up with their own scale.
 
@@ -193,13 +187,13 @@ We can also change the colour scale associated with the probability intervals. H
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_distiller(palette="Spectral")
 ```
 
-![](geom_fan_files/figure-markdown_github/spectral-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/spectral-1.png)
 
 ``` r
 ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradient(low="red", high="pink")
 ```
 
-![](geom_fan_files/figure-markdown_github/spectral-2.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/spectral-2.png)
 
 You can also specify the intervals you want to use for geom\_fan. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
 
@@ -208,7 +202,7 @@ ggplot(fake_df, aes(x=x, y=y)) + geom_fan(intervals=c(50,80,95)/100) +
   theme_bw() + geom_line(data=q_df, mapping=aes(x=time,y=value, group=quantile, linetype=quantile))
 ```
 
-![](geom_fan_files/figure-markdown_github/probs-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/probs-1.png)
 
 Grouping and Facetting
 ----------------------
@@ -223,7 +217,7 @@ fake_df_sex <- rbind(fake_df %>% mutate(Sex="Female"), fake_df_sex)
 ggplot(fake_df_sex, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradientn(colours = terrain.colors(10)) + facet_wrap(~Sex)
 ```
 
-![](geom_fan_files/figure-markdown_github/facet-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/facet-1.png)
 
 We can also display the distributions on the same axes using geom\_interval, in order to facilitate better comparison.
 
@@ -232,7 +226,7 @@ p <- ggplot(fake_df_sex, aes(x=x, y=y,group=Sex,colour=Sex)) + geom_interval() +
 print(p)
 ```
 
-![](geom_fan_files/figure-markdown_github/stat_interval_group-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/stat_interval_group-1.png)
 
 This is also possible using geom\_fan, although because at the moment it is not possible to assign different colour scales to each group, this is less useful.
 
@@ -241,7 +235,7 @@ p <- ggplot(fake_df_sex, aes(x=x, y=y,group=Sex)) + geom_fan() +theme_bw()
 print(p)
 ```
 
-![](geom_fan_files/figure-markdown_github/geom_fan_group-1.png)
+![](geom_fan_files/figure-markdown_github-ascii_identifiers/geom_fan_group-1.png)
 
 Alternatives
 ------------

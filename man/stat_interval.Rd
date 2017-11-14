@@ -28,7 +28,7 @@ plot. You must supply \code{mapping} if there is no plot mapping.}
    the plot data. The return value must be a \code{data.frame.}, and
    will be used as the layer data.}
 
-\item{stat}{Use to overide the default use of \code{stat_interval}}
+\item{stat}{Use to override the default use of \code{stat_interval}}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -57,5 +57,5 @@ to the paired geom/stat.}
 Very similar to \code{\link{geom_interval}}, except uses
 \code{\link[ggplot2]{geom_line}} to handle the plotting. This makes handling
 plotting of intervals for several groups difficult to achieve, so
-\code{\link{geom_interval}} is prefered.
+\code{\link{geom_interval}} is preferred.
 }

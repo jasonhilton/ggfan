@@ -100,7 +100,7 @@ We can fit the model using the `sampling` command. This make take some time. The
 gp_model_fit <- sampling(compiled_model, data=stan_data, iter=3000,thin=6)
 ```
 
-We can get an idea as to whether the samples have converged by examining the $\hat{r}$ (link)[http://projecteuclid.org/download/pdf_1/euclid.ss/1177011136] diagnostic values.
+We can get an idea as to whether the samples have converged by examining the $\hat{r}$ (link)[http://www.stat.columbia.edu/~gelman/research/published/itsim.pdf] diagnostic values.
 Values close to 1 indicate good convergence.
 
 ```{r rhat}
