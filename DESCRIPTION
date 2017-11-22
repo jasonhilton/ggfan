@@ -18,14 +18,14 @@ Imports:
   colorspace,
   dplyr,
   stats,
-  grid
+  grid,
+  rstan
 Suggests: testthat,
     knitr,
     rmarkdown,
     tidyr,
     magrittr,
-    tibble,
-    rstan
+    tibble
 URL: https://github.com/jasonhilton/ggfan
 BugReports: https://github.com/jasonhilton/ggfan/issues
 VignetteBuilder: knitr
