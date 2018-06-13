@@ -202,11 +202,12 @@ geom_interval <- function(mapping = NULL, data = NULL,
 GeomIntervalPath <- ggplot2::ggproto("GeomIntervalPath", ggplot2::Geom,
   required_aes = c("x", "y", "interval","hilo","linetype"),
 
-  default_aes = ggplot2::aes(colour = "black", size = 0.5, alpha = NA),
+  default_aes = ggplot2::aes(colour = "black", size = 0.5, 
+                             alpha = NA,
+                             linetype="solid"),
   draw_group = function(data, panel_scales, coord, arrow = NULL,
                         lineend = "butt", linejoin = "round", linemitre = 1,
                         na.rm = FALSE) {
-
 
     data$line_id <- interaction(data$interval,data$hilo)
 
@@ -227,4 +228,3 @@ GeomIntervalPath <- ggplot2::ggproto("GeomIntervalPath", ggplot2::Geom,
   },
   draw_key = ggplot2::draw_key_path
 )
-
