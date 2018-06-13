@@ -3,3 +3,6 @@
 .travis.yml
 README.Rmd
 cran-comments.md
+^packrat/
+^\.Rprofile$
+^revdep/
