@@ -13,7 +13,7 @@ having to conduct computationally expensive sampling when producing the vignette
   \item{z}{Latent poisson rate}
   \item{y_gen}{Posterior predictive sample of counts `y`} 
 }
-See the help page for \code{\link[rstan]{stanfit}} for more details.}
+See the help page for \code{\link[rstan]{stanfit-class}} for more details.}
 \usage{
 gp_model_fit
 }

@@ -8,7 +8,6 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
   },
 
   compute_group = function(data, scales, params, intervals) {
-
     precomputed_quantiles <- "quantile" %in% names(data)
     if(length(data$x)<2){
       stop("Too few rows in plotting data. This may be because invalid data has
@@ -66,6 +65,7 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
                                    hilo=ifelse(rank(y,ties.method="first")==n(),
                                                1, -1))
     data_interval <- dplyr::ungroup(data_interval)
+
     return(data_interval)
   },
   required_aes = c("x", "y"),
@@ -135,17 +135,19 @@ calc_quantiles <- function(data, intervals, x_var="x",y_var="y",rename=T){
 StatIntervalFctr <- ggplot2::ggproto("StatIntervalFctr", StatInterval,
 
  compute_group= function(data, scales, params, intervals){
+
     data <- StatInterval$compute_group(data,scales,params,intervals)
     data <- dplyr::mutate(data,
                           Interval_cont=Interval,
-                          Interval=as.factor(Interval))
+                          Interval=as.factor(Interval),
+                          Int_group=-Interval_cont * hilo)
     int_levs <-levels(data$Interval)
     int_levs[int_levs=="0"] <- "Median"
     levels(data$Interval) <- int_levs
     return(data)
   },
   default_aes = ggplot2::aes(interval=..Interval..,
-                    group=-..Interval_cont.. * ..hilo..,
+                    group=..Int_group..,
                     linetype=..Interval..,
                     hilo=..hilo..)
 )
@@ -153,7 +155,7 @@ StatIntervalFctr <- ggplot2::ggproto("StatIntervalFctr", StatInterval,
 #' Line plot visualising intervals of a distribution
 #'
 #'  Very similar to \code{\link{geom_interval}}, except uses
-#' \code{\link[ggplot2]{geom_line}} to handle the plotting. This makes handling
+#' \code{\link[ggplot2:geom_path]{geom_line}} to handle the plotting. This makes handling
 #' plotting of intervals for several groups difficult to achieve, so
 #' \code{\link{geom_interval}} is preferred.
 #'
@@ -188,7 +190,7 @@ StatSample <- ggplot2::ggproto("StatSample", ggplot2::Stat,
 
 
 #' Plots a randomly chosen sample of the specified groups using
-#' \code{\link[ggplot2]{geom_line}}
+#' \code{\link[ggplot2:geom_path]{geom_line}}
 #'
 #'
 #' @param n_samples number of samples to plot
