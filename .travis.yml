@@ -25,7 +25,6 @@ matrix:
 before_install:
   - eval "${MATRIX_EVAL}"
   - mkdir ./rstan
-  - eval "CXX14 = $CXX"
   - echo "CXX = $CXX" >> ./rstan/R_Makevars
   - echo "CXX14 = $CXX" >> ./rstan/R_Makevars
   - echo "CXX14FLAGS = `R CMD config CXXFLAGS` -pedantic -g0 -fPIC" >> ./rstan/R_Makevars
