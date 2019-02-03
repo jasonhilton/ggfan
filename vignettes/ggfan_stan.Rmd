@@ -115,7 +115,10 @@ Next, we convert to tidy data format using the `tidyr` function `gather`. And no
 
 ```{r convert_to_list}
 
-z_df <- as_tibble(t(as.matrix(gp_model_fit, "z")))
+z_samp_mat <- t(as.matrix(gp_model_fit, "z"))
+# give names (as_tibble complains if you don't!)
+colnames(z_samp_mat) <- paste0("Sim", 1:dim(z_samp_mat)[2])
+z_df <- as_tibble(z_samp_mat)
 z_df <- z_df %>% mutate(x=x)
 
 z_df_long <- z_df %>% gather(key=Sim, value=z, -x)
@@ -128,7 +131,10 @@ ggplot(z_df_long, aes(x=x,y=z)) + geom_fan() + geom_line(data=data.frame(x=x,y=s
 We can also follow the same process in order to examine the predictive distribution of the counts themselves. These are integers so naturally appear more discrete.
 
 ```{r observations}
-y_df <- as_tibble(t(as.matrix(gp_model_fit, "y_gen")))
+
+y_samp_mat <- t(as.matrix(gp_model_fit, "y_gen"))
+colnames(y_samp_mat) <- paste0("Sim", 1:dim(y_samp_mat)[2])
+y_df <- as_tibble(y_samp_mat)
 y_df <- y_df %>% mutate(x=x)
 
 y_df_long <- y_df %>% gather(key=Sim, value=y, -x)
