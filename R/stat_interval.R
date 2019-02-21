@@ -1,6 +1,7 @@
 #' See \code{\link[ggplot2]{ggplot2-ggproto}}
 #' @format NULL
 #' @usage NULL
+#' @importFrom dplyr n
 #' @export
 StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
   setup_params = function(data, params) {

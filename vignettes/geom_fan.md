@@ -1,7 +1,7 @@
 Using ggfan to plot a distribution
 ================
 Jason Hilton
-2017-11-14
+2019-02-03
 
 Introduction
 ============
@@ -16,35 +16,8 @@ For convenience, a few other libraries are used during the vignette
 library(ggplot2)
 library(magrittr)
 library(tidyr)
-```
-
-    ## Warning: package 'tidyr' was built under R version 3.4.2
-
-    ## 
-    ## Attaching package: 'tidyr'
-
-    ## The following object is masked from 'package:magrittr':
-    ## 
-    ##     extract
-
-``` r
 library(dplyr)
-```
 
-    ## Warning: package 'dplyr' was built under R version 3.4.2
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(ggfan)
 ```
 
@@ -72,13 +45,13 @@ fake_df <- data.frame(x=time, t(fake_data)) %>% gather(key=Sim, value=y, -x)
 head(fake_df)
 ```
 
-    ##   x Sim         y
-    ## 1 1  X1 1.3948458
-    ## 2 2  X1 1.2918445
-    ## 3 3  X1 1.0502027
-    ## 4 4  X1 1.1772656
-    ## 5 5  X1 0.8996833
-    ## 6 6  X1 3.2891427
+    ##   x Sim          y
+    ## 1 1  X1 0.03948941
+    ## 2 2  X1 2.60258210
+    ## 3 3  X1 1.26886186
+    ## 4 4  X1 2.20247000
+    ## 5 5  X1 4.73405871
+    ## 6 6  X1 5.36896542
 
 Now that we have a data set, let's visualise it using `ggfan`.
 
@@ -88,8 +61,6 @@ Firstly, we can summarise the distribution by ploting lines connecting upper and
 p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
 print(p)
 ```
-
-    ## Warning: package 'bindrcpp' was built under R version 3.4.1
 
 ![](geom_fan_files/figure-markdown_github/plot_stat_interval-1.png)
 

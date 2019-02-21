@@ -4,3 +4,8 @@
 .Ruserdata
 inst/doc
 *.Rproj
+packrat/lib*/
+packrat/src/
+packrat/
+*.Rprofile
+revdep/
