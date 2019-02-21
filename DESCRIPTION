@@ -6,7 +6,7 @@ Description: Implements the functionality of the 'fanplot' package as 'geoms'
   distribution, where a visualisation is desired for several values of a 
   continuous covariate. Increasing posterior intervals of the sampled quantity 
   are mapped to a continuous colour scale.
-Version: 0.1.1.9000   
+Version: 0.1.1.9000
 Authors@R: person("Jason", "Hilton", email = "jason_hilton@yahoo.com",
   role = c("aut", "cre"))
 License: GPL-2 | file LICENSE
@@ -29,4 +29,4 @@ Suggests: testthat,
 URL: https://github.com/jasonhilton/ggfan
 BugReports: https://github.com/jasonhilton/ggfan/issues
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

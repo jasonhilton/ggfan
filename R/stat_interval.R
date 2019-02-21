@@ -223,6 +223,7 @@ stat_sample <- function (mapping = NULL, data = NULL, stat = "sample",
 #'
 #' @param a The vector for which comparison are to be made
 #' @param b The vector to match against.
+#' @param tol The tolerance within which values are assumed to be the same.
 #'
 #' @return A vector of logical values the same length as `a` describing whether
 #' this vector element is close to at least one element in `b`
