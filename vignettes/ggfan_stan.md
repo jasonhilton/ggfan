@@ -1,10 +1,33 @@
 Using ggfan with stan
 ================
 Jason Hilton
-2019-02-03
+2019-03-05
 
 ``` r
 library(rstan)
+```
+
+    ## Loading required package: StanHeaders
+
+    ## rstan (Version 2.18.2, GitRev: 2e1f913d3ca3)
+
+    ## For execution on a local, multicore CPU with excess RAM we recommend calling
+    ## options(mc.cores = parallel::detectCores()).
+    ## To avoid recompilation of unchanged Stan programs, we recommend calling
+    ## rstan_options(auto_write = TRUE)
+
+    ## 
+    ## Attaching package: 'rstan'
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     extract
+
+    ## The following object is masked from 'package:magrittr':
+    ## 
+    ##     extract
+
+``` r
 library(dplyr)
 library(magrittr)
 library(tidyr)
@@ -13,7 +36,11 @@ library(tibble)
 library(ggfan)
 ```
 
-The `ggfan` package can be used to plot output from common mcmc sampling programs. As an example we will fit a latent gaussian process model to some simulated count data using stan. First, we simulate some data and plot it. We simulate two observations at each x value, with the count outcome values depending on a sinusoidal latent rate variable.
+The `ggfan` package can be used to plot output from common mcmc sampling
+programs. As an example we will fit a latent gaussian process model to
+some simulated count data using stan. First, we simulate some data and
+plot it. We simulate two observations at each x value, with the count
+outcome values depending on a sinusoidal latent rate variable.
 
 ``` r
 seed <- 34526
@@ -30,11 +57,21 @@ plot(x,y[,1])
 points(x,y[,2])
 ```
 
-![](ggfan_stan_files/figure-markdown_github/stan_example-1.png)
+![](ggfan_stan_files/figure-gfm/stan_example-1.png)<!-- -->
 
-The stan model used is a modified version of the Gaussian Process (GP) examples bundled with `rstan`, and is also based on the latent-variable discussion in the Bayesian Data Anaylsis edition 3 (Gelman et al. 2015). GPs are semi-parametric models based on the assumption that outcomes are joint multivariate normal, and that observations that are close to each other in terms of their covariate values are correlated in outputs.
+The stan model used is a modified version of the Gaussian Process (GP)
+examples bundled with `rstan`, and is also based on the latent-variable
+discussion in the Bayesian Data Anaylsis edition 3 (Gelman et al. 2015).
+GPs are semi-parametric models based on the assumption that outcomes are
+joint multivariate normal, and that observations that are close to each
+other in terms of their covariate values are correlated in outputs.
 
-The model is given below. The details are not especially important for this purpose, but for those familiar with GPs, the roughness and variance parameters are estimated as part of themodel, but a small fixed nugget is added to the diagonal to avoid numerical problems. The model can be compiled by saving the code below in a text file and reading in using `stan_model(file="path/to/model.stan")`.
+The model is given below. The details are not especially important for
+this purpose, but for those familiar with GPs, the roughness and
+variance parameters are estimated as part of themodel, but a small fixed
+nugget is added to the diagonal to avoid numerical problems. The model
+can be compiled by saving the code below in a text file and reading in
+using `stan_model(file="path/to/model.stan")`.
 
 ``` stan
 data {
@@ -85,13 +122,21 @@ generated quantities {
 }
 ```
 
-We can fit the model using the `sampling` command. This make take some time. The process can be speeded up by running chains in parallel by specifying the number of cores you wish to use via the `cores` argument to `sampling`.
+We can fit the model using the `sampling` command. This make take some
+time. The process can be speeded up by running chains in parallel by
+specifying the number of cores you wish to use via the `cores` argument
+to
+`sampling`.
 
 ``` r
 gp_model_fit <- sampling(compiled_model, data=stan_data, iter=3000,thin=6)
 ```
 
-We can get an idea as to whether the samples have converged by examining the *r̂* (link)\[<http://www.stat.columbia.edu/~gelman/research/published/itsim.pdf>\] diagnostic values. Values close to 1 indicate good convergence.
+We can get an idea as to whether the samples have converged by examining
+the \(\hat{r}\)
+(link)\[<http://www.stat.columbia.edu/~gelman/research/published/itsim.pdf>\]
+diagnostic values. Values close to 1 indicate good
+    convergence.
 
 ``` r
 stan_rhat(gp_model_fit)
@@ -99,11 +144,16 @@ stan_rhat(gp_model_fit)
 
     ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 
-![](ggfan_stan_files/figure-markdown_github/rhat-1.png)
+![](ggfan_stan_files/figure-gfm/rhat-1.png)<!-- -->
 
-We now want to convert the stan output to values that can be easily plotted using `ggfan`. We start with the latent variable *z*. We first extract `z` from the fitted stan model with the `as.matrix` method of the `stan_fit` object, before adding the `x` covariate values with `mutate`.
+We now want to convert the stan output to values that can be easily
+plotted using `ggfan`. We start with the latent variable \(z\). We first
+extract `z` from the fitted stan model with the `as.matrix` method of
+the `stan_fit` object, before adding the `x` covariate values with
+`mutate`.
 
-Next, we convert to tidy data format using the `tidyr` function `gather`. And now we are ready to plot with `ggfan`.
+Next, we convert to tidy data format using the `tidyr` function
+`gather`. And now we are ready to plot with `ggfan`.
 
 ``` r
 z_samp_mat <- t(as.matrix(gp_model_fit, "z"))
@@ -118,9 +168,11 @@ ggplot(z_df_long, aes(x=x,y=z)) + geom_fan() + geom_line(data=data.frame(x=x,y=s
   scale_fill_distiller()
 ```
 
-![](ggfan_stan_files/figure-markdown_github/convert_to_list-1.png)
+![](ggfan_stan_files/figure-gfm/convert_to_list-1.png)<!-- -->
 
-We can also follow the same process in order to examine the predictive distribution of the counts themselves. These are integers so naturally appear more discrete.
+We can also follow the same process in order to examine the predictive
+distribution of the counts themselves. These are integers so naturally
+appear more discrete.
 
 ``` r
 y_samp_mat <- t(as.matrix(gp_model_fit, "y_gen"))
@@ -136,6 +188,7 @@ ggplot(y_df_long, aes(x=x,y=y)) + geom_fan() +
   scale_fill_distiller() + geom_interval()
 ```
 
-![](ggfan_stan_files/figure-markdown_github/observations-1.png)
+![](ggfan_stan_files/figure-gfm/observations-1.png)<!-- -->
 
-A similar process can be folowed when using other MCMC sampling packages, such as `bugs` or `jags`.
+A similar process can be folowed when using other MCMC sampling
+packages, such as `bugs` or `jags`.

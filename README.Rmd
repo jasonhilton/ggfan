@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 This package is a ggplot-based implementation of some of the functionality of the [`fanplot` package](https://gjabel.wordpress.com/category/r/fanplot/) by Guy Abel. Fanplot provides methods to visualise probability distributions by representing intervals of the distribution function with colours. Plotting samples from posterior distributions obtained through MCMC is a particular aim. A ggplot-based implementation is useful as it allows leverage of the power of [ggplot2](http://ggplot2.tidyverse.org/) features allowing, for example, facetting and easy theming.
 
 ## Installation
-The package has recently been submitted to CRAN. Installation directly from CRAN will be possible if and when the package is accepted:
+Installation directly from CRAN should be possible shortly, once the package has been resubmitted and checked:
 `install.packages("ggfan")`
 Otherwise, the package can be installed directly from github using the devtools package: `devtools::install_github("jasonhilton/ggfan")`. 
 
