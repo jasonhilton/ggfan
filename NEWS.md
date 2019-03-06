@@ -1,5 +1,5 @@
 # ggfan 0.1.3
-* Ensures compatibility with updates of dplyr and tibble (thanks to Francois Romain for adding the relavant import for dplyr.)
+* Ensures compatibility with updates of dplyr and tibble (thanks to Francois Romain for adding the relevant import for dplyr.)
 
 # ggfan 0.1.2
 * Ensures compatibility with ggplot 2.2.1.9000 and hopefully therefore 2.3.0.
