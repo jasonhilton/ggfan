@@ -53,7 +53,7 @@ head(fake_df)
 
 Now that we have a data set, let's visualise it using `ggfan`.
 
-Firstly, we can summarise the distribution by ploting lines connecting upper and lower boundaries of central probability intervals using `stat_interval`. This calculates the intervals, and by default associates these with the `linetype` aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
+Firstly, we can summarise the distribution by plotting lines connecting upper and lower boundaries of central probability intervals using `stat_interval`. This calculates the intervals, and by default associates these with the `linetype` aesthetic. The precise intervals to be plotted can be specified. The 'zero' interval here describes the median.
 
 ```{r plot_stat_interval}
 p <- ggplot(fake_df, aes(x=x,y=y)) + geom_interval()
@@ -144,7 +144,7 @@ ggplot(fake_df, aes(x=x,y=y)) + geom_fan() + theme_bw() + scale_fill_gradient(lo
 ```
 
 
-You can also specify the intervals you want to use for `geom_fan`. If we specifiy just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
+You can also specify the intervals you want to use for `geom_fan`. If we specify just the 50%, 80% and 95% intervals, we can see these match up approximately with the relevant quantiles of the theoretical distribution. These do not match exactly because we only obtained a finite sample from the distribution - large sample sizes provide greater accuracy.
 
 ```{r probs}
 
