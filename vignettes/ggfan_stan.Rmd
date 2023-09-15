@@ -12,6 +12,7 @@ vignette: >
 
 ```{r setup}
 library(rstan)
+library(ggplot2)
 library(dplyr)
 library(magrittr)
 library(tidyr)

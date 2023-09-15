@@ -19,7 +19,7 @@ StatInterval <- ggplot2::ggproto("StatInterval", ggplot2::Stat,
     if (!precomputed_quantiles){
       data <- calc_quantiles(data, intervals)
     } else {
-      if (class(data$quantile)!= "numeric"){
+      if (!inherits(data$quantile, "numeric")){
         stop("Please ensure quantiles are inputed as a numeric vector with
              values bounded by 0 and 1")
       }

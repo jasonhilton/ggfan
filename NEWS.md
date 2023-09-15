@@ -1,3 +1,7 @@
+# ggfan 0.1.4
+* Ensures vignette compatibility with new version of `rstan` (which now no longer imports ggplot2 on which I was stupidly relying). Thanks to Ben Goodrich for highlighting this (and for all the cool work done by the stan devs in general). 
+* Fixes notes regarding unneeded imports.
+
 # ggfan 0.1.3
 * Ensures compatibility with updates of dplyr and tibble (thanks to Francois Romain for adding the relevant import for dplyr.)
 
